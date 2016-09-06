@@ -297,6 +297,7 @@ set(LLVM_ALL_TARGETS
   Sparc
   SystemZ
   WebAssembly
+  M680x0
   X86
   XCore
   )

@@ -1,4 +1,4 @@
-;===- ./lib/Target/M680x0/LLVMBuild.txt ------------------------*- Conf -*--===;
+;===- ./lib/Target/M680x0/InstPrinter/LLVMBuild.txt ------------*- Conf -*--===;
 ;
 ;                     The LLVM Compiler Infrastructure
 ;
@@ -15,25 +15,9 @@
 ;
 ;===------------------------------------------------------------------------===;
 
-[common]
-subdirectories = InstPrinter MCTargetDesc TargetInfo
-
 [component_0]
-type = TargetGroup
-name = M680x0
-parent = Target
-
-[component_1]
 type = Library
-name = M680x0CodeGen
+name = M680x0AsmPrinter
 parent = M680x0
-required_libraries =
-                     CodeGen Core MC  AsmPrinter
-                     M680x0Desc
-                     M680x0Info
-                     M680x0AsmPrinter
-                     SelectionDAG
-                     Support
-                     Target
-
+required_libraries = MC Support
 add_to_library_groups = M680x0

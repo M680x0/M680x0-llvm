@@ -79,7 +79,12 @@ public:
 
   bool abiUsesSoftFloat() const;
 
-  unsigned stackAlignment() const { return 2; } // FIXME true for M68000
+  // FIXME true for M68000 and probably for all M680x0 line, but ColdFire
+  unsigned getStackAlignment() const { return 2; }
+
+  /// getSlotSize - Stack slot size in bytes.
+  /// TODO this must be controlled by options like -malign-int and -mshort
+  unsigned getSlotSize() const { return 2; }
 
   M680x0Subtarget &initializeSubtargetDependencies(StringRef CPU, StringRef FS,
                                                  const M680x0TargetMachine &TM);

@@ -126,15 +126,21 @@ classifyGlobalFunctionReference(const GlobalValue *GV, const Module &M) const {
   return M680x0II::MO_NO_FLAG;
 }
 
-M680x0Subtarget &
-M680x0Subtarget::initializeSubtargetDependencies(StringRef CPU, StringRef FS,
-                                               const M680x0TargetMachine &TM) {
+M680x0Subtarget & M680x0Subtarget::
+initializeSubtargetDependencies(StringRef CPU, StringRef FS,
+                                const M680x0TargetMachine &TM) {
   std::string CPUName = selectM680x0CPU(TargetTriple, CPU);
 
   // Parse features string.
   ParseSubtargetFeatures(CPUName, FS);
   // Initialize scheduling itinerary for the specified CPU.
   InstrItins = getInstrItineraryForCPU(CPUName);
+
+  // Default stack alignment is 8 bytes, ??? Do I need this override?
+  // if (StackAlignOverride)
+  //   stackAlignment = StackAlignOverride;
+  // else
+    stackAlignment = 8;
 
   return *this;
 }

@@ -797,9 +797,11 @@ SelectARII(SDNode *Parent, SDValue N,
     return false;
   }
 
-  // If we have a symbol as index, make it the base
+  // If we have a symbol(or something that acts like an address base) as index,
+  // make it the base
   unsigned Opcode = AM.IndexReg.getOpcode();
-  if (Opcode == M680x0ISD::WrapperPC || Opcode == M680x0ISD::Wrapper) {
+  if (Opcode == M680x0ISD::WrapperPC || Opcode == M680x0ISD::Wrapper ||
+      Opcode == M680x0ISD::GlobalBaseReg) {
     Base = AM.IndexReg;
     Index = AM.BaseReg;
   } else {

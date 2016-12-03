@@ -172,6 +172,7 @@ public:
     VK_GOT,
     VK_GOTOFF,
     VK_GOTREL,
+    VK_GOTPC,
     VK_GOTPCREL,
     VK_GOTTPOFF,
     VK_INDNTPOFF,

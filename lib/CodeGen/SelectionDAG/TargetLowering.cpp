@@ -2442,8 +2442,6 @@ SDValue TargetLowering::SimplifySetCC(EVT VT, SDValue N0, SDValue N1,
           cast<ConstantSDNode>(N0.getOperand(1))->getAPIntValue();
         for (unsigned width = origWidth / 2; width>=8; width /= 2) {
           APInt newMask = APInt::getLowBitsSet(maskWidth, width);
-          unsigned Alignment =
-            DAG.getDataLayout().getABIIntegerTypeAlignment(width);
           for (unsigned offset=0; offset<origWidth/width; offset++) {
             if (Mask.isSubsetOf(newMask)) {
               if (DAG.getDataLayout().isLittleEndian())

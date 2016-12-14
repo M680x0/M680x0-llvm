@@ -223,6 +223,9 @@ namespace CallingConv {
     // Calling convention between AArch64 Advanced SIMD functions
     AArch64_VectorCall = 97,
 
+    /// M680x0_INTR - Calling convention used for M680x0 interrupt routines.
+    M680x0_INTR = 1000,
+
     /// The highest possible calling convention ID. Must be some 2^k - 1.
     MaxID = 1023
   };

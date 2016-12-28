@@ -296,6 +296,29 @@ getDispSize(unsigned Opd) {
   }
 }
 
+static inline unsigned
+getMaskedSpillRegister(unsigned order) {
+  switch (order) {
+    default: return 0;
+    case  0: return M680x0::D0;
+    case  1: return M680x0::D1;
+    case  2: return M680x0::D2;
+    case  3: return M680x0::D3;
+    case  4: return M680x0::D4;
+    case  5: return M680x0::D5;
+    case  6: return M680x0::D6;
+    case  7: return M680x0::D7;
+    case  8: return M680x0::A0;
+    case  9: return M680x0::A1;
+    case 10: return M680x0::A2;
+    case 11: return M680x0::A3;
+    case 12: return M680x0::A4;
+    case 13: return M680x0::A5;
+    case 14: return M680x0::A6;
+    case 15: return M680x0::A7;
+  }
+}
+
 } // end of M680x0II namespace
 
 } // end of llvm namespace

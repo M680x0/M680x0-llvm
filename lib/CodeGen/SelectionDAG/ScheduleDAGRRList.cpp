@@ -500,7 +500,7 @@ FindCallSeqStart(SDNode *N, unsigned &NestLevel, unsigned &MaxNest,
             BestMaxNest = MyMaxNest;
           }
       }
-      assert(Best);
+      //assert(Best);
       MaxNest = BestMaxNest;
       return Best;
     }

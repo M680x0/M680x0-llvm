@@ -229,6 +229,12 @@ if(CMAKE_SIZEOF_VOID_P EQUAL 8 AND MINGW)
   add_definitions( -D_FILE_OFFSET_BITS=64 )
 endif()
 
+# GCC m68k on Linux by default aligns on 16bit, we want 32
+if(LLVM_INFERRED_HOST_TRIPLE STREQUAL "m68k-unknown-linux-gnu")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -malign-int")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -malign-int")
+endif()
+
 if( CMAKE_SIZEOF_VOID_P EQUAL 8 AND NOT WIN32 )
   # TODO: support other platforms and toolchains.
   if( LLVM_BUILD_32_BITS )

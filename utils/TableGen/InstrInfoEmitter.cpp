@@ -135,7 +135,7 @@ GetMIOperandInfo(const CodeGenTarget &Target,
           + ", 1";
     } else {
       Res = std::to_string(Op.MIOperandNo)
-          + ", " + Namespace + "::MIOpTypes::" + Op.Rec->getName()
+          + ", " + Namespace + "::MIOpTypes::" + Op.Rec->getName().str()
           + ", " + std::to_string(Op.MINumOperands);
     }
 
@@ -273,7 +273,7 @@ void InstrInfoEmitter::EmitMCOperandInfo(raw_ostream &OS,
 }
 
 /// Initialize data structures for generating operand name mappings.
-/// 
+///
 /// \param Operands [out] A map used to generate the OpName enum with operand
 ///        names as its keys and operand enum values as its values.
 /// \param OperandMap [out] A map for representing the operand name mappings for

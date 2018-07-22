@@ -19,7 +19,7 @@
 name: MxEXT
 body: |
   bb.0:
-    %wd0 = EXT16 %wd0, implicit-def %ccr
-    %wd3 = EXT16 %wd3, implicit-def %ccr
-    %d0 =  EXT32 %d0,  implicit-def %ccr
-    %d7 =  EXT32 %d7,  implicit-def %ccr
+    $wd0 = EXT16 $wd0, implicit-def $ccr
+    $wd3 = EXT16 $wd3, implicit-def $ccr
+    $d0 =  EXT32 $d0,  implicit-def $ccr
+    $d7 =  EXT32 $d7,  implicit-def $ccr

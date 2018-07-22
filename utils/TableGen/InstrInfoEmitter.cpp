@@ -401,7 +401,7 @@ void InstrInfoEmitter::emitOperandTypesEnum(raw_ostream &OS,
     if (!Op->isAnonymous())
       OS << "  " << Op->getName();
       if (First) {
-        OS << " = MCOI::OPERAND_FIRST_TARGET";
+        OS << " = llvm::MCOI::OPERAND_FIRST_TARGET";
         First = false;
       }
       OS << ",\n";
@@ -635,7 +635,7 @@ void InstrInfoEmitter::run(raw_ostream &OS) {
 
   emitOperandNameMappings(OS, Target, NumberedInstructions);
 
-  emitOperandTypesEnum(OS, Target);
+  // emitOperandTypesEnum(OS, Target);
 
   emitMCIIHelperMethods(OS, TargetName);
 }

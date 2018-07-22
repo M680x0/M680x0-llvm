@@ -34,8 +34,8 @@
 name: MxBiArOp_RFRI
 body: |
   bb.0:
-    %wd0 = XOR16di %wd0, 0,      implicit-def %ccr
-    %wd3 = XOR16di %wd3, -1,     implicit-def %ccr
-    %d0  = XOR32di  %d0, -1,     implicit-def %ccr
-    %d0  = XOR32di  %d0, 131071, implicit-def %ccr
-    %d7  = XOR32di  %d7, 458752, implicit-def %ccr
+    $wd0 = XOR16di $wd0, 0,      implicit-def $ccr
+    $wd3 = XOR16di $wd3, -1,     implicit-def $ccr
+    $d0  = XOR32di  $d0, -1,     implicit-def $ccr
+    $d0  = XOR32di  $d0, 131071, implicit-def $ccr
+    $d7  = XOR32di  $d7, 458752, implicit-def $ccr

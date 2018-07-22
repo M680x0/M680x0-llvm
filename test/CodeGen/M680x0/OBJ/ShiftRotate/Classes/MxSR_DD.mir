@@ -29,13 +29,13 @@
 name: MxSR_DD
 body: |
   bb.0:
-     %bd1 = SHL8dd  %bd1, %bd0, implicit-def %ccr
-     %d2  = SHL32dd  %d2,  %d1, implicit-def %ccr
-     %bd3 = LSR8dd  %bd3, %bd2, implicit-def %ccr
-     %d4  = LSR32dd  %d4,  %d3, implicit-def %ccr
-     %bd5 = ASR8dd  %bd5, %bd4, implicit-def %ccr
-     %d6  = ASR32dd  %d6,  %d5, implicit-def %ccr
-     %bd7 = ROL8dd  %bd7, %bd6, implicit-def %ccr
-     %d1  = ROL32dd  %d1,  %d7, implicit-def %ccr
-     %bd1 = ROR8dd  %bd1, %bd0, implicit-def %ccr
-     %d1  = ROR32dd  %d1,  %d0, implicit-def %ccr
+     $bd1 = SHL8dd  $bd1, $bd0, implicit-def $ccr
+     $d2  = SHL32dd  $d2,  $d1, implicit-def $ccr
+     $bd3 = LSR8dd  $bd3, $bd2, implicit-def $ccr
+     $d4  = LSR32dd  $d4,  $d3, implicit-def $ccr
+     $bd5 = ASR8dd  $bd5, $bd4, implicit-def $ccr
+     $d6  = ASR32dd  $d6,  $d5, implicit-def $ccr
+     $bd7 = ROL8dd  $bd7, $bd6, implicit-def $ccr
+     $d1  = ROL32dd  $d1,  $d7, implicit-def $ccr
+     $bd1 = ROR8dd  $bd1, $bd0, implicit-def $ccr
+     $d1  = ROR32dd  $d1,  $d0, implicit-def $ccr

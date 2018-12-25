@@ -1,4 +1,4 @@
-//===-- llvm/Target/M680x0ELFTargetObjectFile.h - M680x0 Object Info -- C++ -====//
+//===-- M680x0ELFTargetObjectFile.h - M680x0 Object Info ---------*- C++ -====//
 //
 //                     The LLVM Compiler Infrastructure
 //
@@ -6,23 +6,29 @@
 // License. See LICENSE.TXT for details.
 //
 //===----------------------------------------------------------------------===//
+///
+/// \file
+/// This file contains declarations for M680x0 ELF object file lowering.
+///
+//===----------------------------------------------------------------------===//
 
 #ifndef LLVM_LIB_TARGET_M680X0_M680X0TARGETOBJECTFILE_H
 #define LLVM_LIB_TARGET_M680X0_M680X0TARGETOBJECTFILE_H
 
 #include "M680x0TargetMachine.h"
+
 #include "llvm/CodeGen/TargetLoweringObjectFileImpl.h"
 
 namespace llvm {
 class M680x0TargetMachine;
-  class M680x0ELFTargetObjectFile : public TargetLoweringObjectFileELF {
-    const M680x0TargetMachine *TM;
-    MCSection *SmallDataSection;
-    MCSection *SmallBSSSection;
-  public:
-    void Initialize(MCContext &Ctx, const TargetMachine &TM) override;
+class M680x0ELFTargetObjectFile : public TargetLoweringObjectFileELF {
+  const M680x0TargetMachine *TM;
+  MCSection *SmallDataSection;
+  MCSection *SmallBSSSection;
 
-  };
+public:
+  void Initialize(MCContext &Ctx, const TargetMachine &TM) override;
+};
 } // end namespace llvm
 
 #endif

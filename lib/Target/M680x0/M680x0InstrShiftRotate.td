@@ -1,4 +1,4 @@
-//===------ M680x0InstrShiftRotate.td - Logical Instrs ------- tablegen -*-===//
+//===------ M680x0InstrShiftRotate.td - Logical Instrs -----*- tablegen -*-===//
 //
 //                     The LLVM Compiler Infrastructure
 //
@@ -6,22 +6,23 @@
 // License. See LICENSE.TXT for details.
 //
 //===----------------------------------------------------------------------===//
-//
-// This file describes the logical instructions in the M680x0 architecture.
-// Here is the current status of the file:
-//
-//  Machine:
-//
-//    SHL     [~]   ASR     [~]   LSR      [~]   SWAP     [ ]
-//    ROL     [~]   ROR     [~]   ROXL     [ ]   ROXR     [ ]
-//
-//  Map:
-//
-//   [ ] - was not touched at all
-//   [!] - requires extarnal stuff implemented
-//   [~] - in progress but usable
-//   [x] - done
-//
+///
+/// \file
+/// This file describes the logical instructions in the M680x0 architecture.
+/// Here is the current status of the file:
+///
+///  Machine:
+///
+///    SHL     [~]   ASR     [~]   LSR      [~]   SWAP     [ ]
+///    ROL     [~]   ROR     [~]   ROXL     [ ]   ROXR     [ ]
+///
+///  Map:
+///
+///   [ ] - was not touched at all
+///   [!] - requires extarnal stuff implemented
+///   [~] - in progress but usable
+///   [x] - done
+///
 //===----------------------------------------------------------------------===//
 
 def MxRODI_R : MxBead1Bit<0>;

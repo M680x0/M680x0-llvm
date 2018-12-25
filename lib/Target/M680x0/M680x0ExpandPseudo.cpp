@@ -1,5 +1,4 @@
-//===------- M680x0ExpandPseudo.cpp - Expand pseudo instructions
-//-------------===//
+//===--M680x0ExpandPseudo.cpp - Expand pseudo instructions ------*- C++ -*-===//
 //
 //                     The LLVM Compiler Infrastructure
 //
@@ -7,11 +6,12 @@
 // License. See LICENSE.TXT for details.
 //
 //===----------------------------------------------------------------------===//
-//
-// This file contains a pass that expands pseudo instructions into target
-// instructions to allow proper scheduling, if-conversion, other late
-// optimizations, or simply the encoding of the instructions.
-//
+///
+/// \file
+/// This file contains a pass that expands pseudo instructions into target
+/// instructions to allow proper scheduling, if-conversion, other late
+/// optimizations, or simply the encoding of the instructions.
+///
 //===----------------------------------------------------------------------===//
 
 #include "M680x0.h"
@@ -19,15 +19,17 @@
 #include "M680x0InstrInfo.h"
 #include "M680x0MachineFunction.h"
 #include "M680x0Subtarget.h"
+
 #include "llvm/Analysis/EHPersonalities.h"
 #include "llvm/CodeGen/MachineFunctionPass.h"
 #include "llvm/CodeGen/MachineInstrBuilder.h"
 #include "llvm/CodeGen/MachineRegisterInfo.h"
 #include "llvm/CodeGen/Passes.h" // For IDs of passes that are preserved.
 #include "llvm/IR/GlobalValue.h"
+
 using namespace llvm;
 
-#define DEBUG_TYPE "M680x0-pseudo"
+#define DEBUG_TYPE "M680x0-expand-pseudos"
 
 namespace {
 class M680x0ExpandPseudo : public MachineFunctionPass {

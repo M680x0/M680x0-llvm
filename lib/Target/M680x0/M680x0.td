@@ -1,4 +1,4 @@
-//===- M680x0.td - Target definition file for the Motorola 680x0 tablegen -===//
+//===-- M680x0.td - Motorola 680x0 target definitions ------*- tablegen -*-===//
 //
 //                     The LLVM Compiler Infrastructure
 //
@@ -6,10 +6,11 @@
 // License. See LICENSE.TXT for details.
 //
 //===----------------------------------------------------------------------===//
-//
-// This is a target description file for the Motorola 680x0 family, referred
-// to here as the "M680x0" architecture.
-//
+///
+/// \file
+/// This is a target description file for the Motorola 680x0 family, referred
+/// to here as the "M680x0" architecture.
+///
 //===----------------------------------------------------------------------===//
 
 include "llvm/Target/Target.td"

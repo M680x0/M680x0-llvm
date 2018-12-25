@@ -6,36 +6,37 @@
 // License. See LICENSE.TXT for details.
 //
 //===----------------------------------------------------------------------===//
-//
-// This file describes the M680x0 jump, return, call, and related instructions.
-// Here is the current status of the file:
-//
-//  Machine:
-//
-//       BRA   [x]     BSR  [ ]     Bcc [ ]     DBcc [ ]     FBcc [ ]
-//       FDBcc [ ]     FNOP [ ]     FPn [ ]     FScc [ ]     FTST [ ]
-//       JMP   [~]     JSR  [x]     NOP [x]     RTD  [!]     RTR  [ ]
-//       RTS   [x]     Scc  [x]     TST [ ]
-//
-//  Pseudo:
-//
-//          RET [x]
-//    TCRETURNj [x]   TCRETURNq [x]
-//     TAILJMPj [x]    TAILJMPq [x]
-//
-//  Map:
-//
-//   [ ] - was not touched at all
-//   [!] - requires extarnal stuff implemented
-//   [~] - in progress but usable
-//   [x] - done
-//
-//
-//                                   NOTE
-//      Though branch and jump instructions are using memory operands they
-//      DO NOT read the jump address from memory, they just calculate EA
-//      and jump there.
-//
+///
+/// \file
+/// This file describes the M680x0 jump, return, call, and related instructions.
+/// Here is the current status of the file:
+///
+///  Machine:
+///
+///       BRA   [x]     BSR  [ ]     Bcc [ ]     DBcc [ ]     FBcc [ ]
+///       FDBcc [ ]     FNOP [ ]     FPn [ ]     FScc [ ]     FTST [ ]
+///       JMP   [~]     JSR  [x]     NOP [x]     RTD  [!]     RTR  [ ]
+///       RTS   [x]     Scc  [x]     TST [ ]
+///
+///  Pseudo:
+///
+///          RET [x]
+///    TCRETURNj [x]   TCRETURNq [x]
+///     TAILJMPj [x]    TAILJMPq [x]
+///
+///  Map:
+///
+///   [ ] - was not touched at all
+///   [!] - requires extarnal stuff implemented
+///   [~] - in progress but usable
+///   [x] - done
+///
+///
+///                                   NOTE
+///      Though branch and jump instructions are using memory operands they
+///      DO NOT read the jump address from memory, they just calculate EA
+///      and jump there.
+///
 //===----------------------------------------------------------------------===//
 
 //===----------------------------------------------------------------------===//

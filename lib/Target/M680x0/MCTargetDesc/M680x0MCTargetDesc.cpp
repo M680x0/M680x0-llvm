@@ -1,4 +1,4 @@
-//===-- M680x0MCTargetDesc.cpp - M680x0 Target Descriptions ---------------===//
+//===-- M680x0MCTargetDesc.cpp - M680x0 Target Descriptions -----*- C++ -*-===//
 //
 //                     The LLVM Compiler Infrastructure
 //
@@ -6,22 +6,25 @@
 // License. See LICENSE.TXT for details.
 //
 //===----------------------------------------------------------------------===//
-//
-// This file provides M680x0 specific target descriptions.
-//
+///
+/// \file
+/// This file provides M680x0 target specific descriptions.
+///
 //===----------------------------------------------------------------------===//
 
 #include "M680x0MCTargetDesc.h"
-#include "InstPrinter/M680x0InstPrinter.h"
+
 #include "M680x0MCAsmInfo.h"
 
-#include "llvm/MC/MachineLocation.h"
+#include "InstPrinter/M680x0InstPrinter.h"
+
 #include "llvm/MC/MCELFStreamer.h"
 #include "llvm/MC/MCInstPrinter.h"
 #include "llvm/MC/MCInstrInfo.h"
 #include "llvm/MC/MCRegisterInfo.h"
 #include "llvm/MC/MCSubtargetInfo.h"
 #include "llvm/MC/MCSymbol.h"
+#include "llvm/MC/MachineLocation.h"
 #include "llvm/Support/CommandLine.h"
 #include "llvm/Support/ErrorHandling.h"
 #include "llvm/Support/FormattedStream.h"
@@ -38,21 +41,18 @@ using namespace llvm;
 #define GET_REGINFO_MC_DESC
 #include "M680x0GenRegisterInfo.inc"
 
-static StringRef
-ParseM680x0Triple(const Triple &TT, StringRef CPU) {
+static StringRef ParseM680x0Triple(const Triple &TT, StringRef CPU) {
   std::string FS = "";
   return FS;
 }
 
-static MCInstrInfo *
-createM680x0MCInstrInfo() {
+static MCInstrInfo *createM680x0MCInstrInfo() {
   MCInstrInfo *X = new MCInstrInfo();
   InitM680x0MCInstrInfo(X); // defined in M680x0GenInstrInfo.inc
   return X;
 }
 
-static MCRegisterInfo *
-createM680x0MCRegisterInfo(const Triple &TT) {
+static MCRegisterInfo *createM680x0MCRegisterInfo(const Triple &TT) {
   MCRegisterInfo *X = new MCRegisterInfo();
   InitM680x0MCRegisterInfo(X, llvm::M680x0::A0, 0, 0, llvm::M680x0::PC);
   return X;
@@ -60,7 +60,7 @@ createM680x0MCRegisterInfo(const Triple &TT) {
 
 static MCSubtargetInfo *
 createM680x0MCSubtargetInfo(const Triple &TT, StringRef CPU, StringRef FS) {
-  std::string ArchFS = ParseM680x0Triple(TT,CPU);
+  std::string ArchFS = ParseM680x0Triple(TT, CPU);
   if (!FS.empty()) {
     if (!ArchFS.empty())
       ArchFS = ArchFS + "," + FS.str();
@@ -70,8 +70,8 @@ createM680x0MCSubtargetInfo(const Triple &TT, StringRef CPU, StringRef FS) {
   return createM680x0MCSubtargetInfoImpl(TT, CPU, ArchFS);
 }
 
-static MCAsmInfo *
-createM680x0MCAsmInfo(const MCRegisterInfo &MRI, const Triple &TT) {
+static MCAsmInfo *createM680x0MCAsmInfo(const MCRegisterInfo &MRI,
+                                        const Triple &TT) {
   MCAsmInfo *MAI = new M680x0ELFMCAsmInfo(TT);
 
   // Initialize initial frame state.
@@ -80,7 +80,7 @@ createM680x0MCAsmInfo(const MCRegisterInfo &MRI, const Triple &TT) {
 
   // Initial state of the frame pointer is SP+stackGrowth.
   MCCFIInstruction Inst = MCCFIInstruction::createDefCfa(
-    nullptr, MRI.getDwarfRegNum(llvm::M680x0::SP, true), -stackGrowth);
+      nullptr, MRI.getDwarfRegNum(llvm::M680x0::SP, true), -stackGrowth);
   MAI->addInitialFrameState(Inst);
 
   //??? Do i need this?
@@ -92,21 +92,21 @@ createM680x0MCAsmInfo(const MCRegisterInfo &MRI, const Triple &TT) {
   return MAI;
 }
 
-static MCRelocationInfo *
-createM680x0MCRelocationInfo(const Triple &TheTriple, MCContext &Ctx) {
+static MCRelocationInfo *createM680x0MCRelocationInfo(const Triple &TheTriple,
+                                                      MCContext &Ctx) {
   // Default to the stock relocation info.
   return llvm::createMCRelocationInfo(TheTriple, Ctx);
 }
 
-static MCInstPrinter *
-createM680x0MCInstPrinter(const Triple &T, unsigned SyntaxVariant,
-                          const MCAsmInfo &MAI, const MCInstrInfo &MII,
-                          const MCRegisterInfo &MRI) {
+static MCInstPrinter *createM680x0MCInstPrinter(const Triple &T,
+                                                unsigned SyntaxVariant,
+                                                const MCAsmInfo &MAI,
+                                                const MCInstrInfo &MII,
+                                                const MCRegisterInfo &MRI) {
   return new M680x0InstPrinter(MAI, MII, MRI);
 }
 
-extern "C" void
-LLVMInitializeM680x0TargetMC() {
+extern "C" void LLVMInitializeM680x0TargetMC() {
   Target &T = TheM680x0Target;
 
   // Register the MC asm info.

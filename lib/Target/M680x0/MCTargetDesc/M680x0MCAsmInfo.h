@@ -6,9 +6,10 @@
 // License. See LICENSE.TXT for details.
 //
 //===----------------------------------------------------------------------===//
-//
-// This file contains the declaration of the M680x0MCAsmInfo class.
-//
+///
+/// \file
+/// This file contains the declarations of the M680x0 MCAsmInfo properties.
+///
 //===----------------------------------------------------------------------===//
 
 #ifndef LLVM_LIB_TARGET_M680X0_MCTARGETDESC_M680X0MCASMINFO_H

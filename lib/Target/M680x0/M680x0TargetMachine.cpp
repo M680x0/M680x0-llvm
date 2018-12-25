@@ -1,4 +1,4 @@
-//===-- M680x0TargetMachine.cpp - Define TargetMachine for M680x0 ---------===//
+//===-- M680x0TargetMachine.cpp - M680x0 target machine ---------*- C++ -*-===//
 //
 //                     The LLVM Compiler Infrastructure
 //
@@ -6,9 +6,10 @@
 // License. See LICENSE.TXT for details.
 //
 //===----------------------------------------------------------------------===//
-//
-// Implements the info about M680x0 target spec.
-//
+///
+/// \file
+/// This file contains implementation for M680x0 target machine.
+///
 //===----------------------------------------------------------------------===//
 
 #include "M680x0.h"
@@ -21,6 +22,7 @@
 #include "llvm/CodeGen/TargetPassConfig.h"
 #include "llvm/IR/LegacyPassManager.h"
 #include "llvm/Support/TargetRegistry.h"
+
 using namespace llvm;
 
 #define DEBUG_TYPE "m680x0"
@@ -91,7 +93,7 @@ M680x0TargetMachine::M680x0TargetMachine(const Target &T, const Triple &TT,
                                          CodeGenOpt::Level OL, bool JIT)
     : LLVMTargetMachine(T, computeDataLayout(TT, CPU, Options), TT, CPU, FS,
                         Options, getEffectiveRelocModel(TT, RM),
-                        getEffectiveCodeModel(CM, JIT), OL),
+                        ::getEffectiveCodeModel(CM, JIT), OL),
       TLOF(make_unique<M680x0ELFTargetObjectFile>()),
       Subtarget(TT, CPU, FS, *this) {
   initAsmInfo();

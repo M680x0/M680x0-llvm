@@ -1,4 +1,4 @@
-//===-- M680x0MCAsmInfo.cpp - M680x0 Asm Properties -----------------------===//
+//===-- M680x0MCAsmInfo.cpp - M680x0 Asm Properties -------------*- C++ -*-===//
 //
 //                     The LLVM Compiler Infrastructure
 //
@@ -6,9 +6,10 @@
 // License. See LICENSE.TXT for details.
 //
 //===----------------------------------------------------------------------===//
-//
-// This file contains the declarations of the M680x0MCAsmInfo properties.
-//
+///
+/// \file
+/// This file contains the definitions of the M680x0 MCAsmInfo properties.
+///
 //===----------------------------------------------------------------------===//
 
 #include "M680x0MCAsmInfo.h"
@@ -17,7 +18,7 @@
 
 using namespace llvm;
 
-void M680x0ELFMCAsmInfo::anchor() { }
+void M680x0ELFMCAsmInfo::anchor() {}
 
 // TODO get back to it when it comes to printing
 M680x0ELFMCAsmInfo::M680x0ELFMCAsmInfo(const Triple &T) {

@@ -51,7 +51,6 @@ StringRef Triple::getArchTypeName(ArchType Kind) {
   case tcele:          return "tcele";
   case thumb:          return "thumb";
   case thumbeb:        return "thumbeb";
-  case m680x0:         return "m680x0";
   case x86:            return "i386";
   case x86_64:         return "x86_64";
   case xcore:          return "xcore";
@@ -70,6 +69,7 @@ StringRef Triple::getArchTypeName(ArchType Kind) {
   case shave:          return "shave";
   case wasm32:         return "wasm32";
   case wasm64:         return "wasm64";
+  case m680x0:         return "m680x0";
   case renderscript32: return "renderscript32";
   case renderscript64: return "renderscript64";
   }
@@ -119,8 +119,6 @@ StringRef Triple::getArchTypePrefix(ArchType Kind) {
 
   case systemz:     return "s390";
 
-  case m680x0:      return "m680x0";
-
   case x86:
   case x86_64:      return "x86";
 
@@ -149,6 +147,8 @@ StringRef Triple::getArchTypePrefix(ArchType Kind) {
 
   case riscv32:
   case riscv64:     return "riscv";
+
+  case m680x0:     return "m680x0";
   }
 }
 
@@ -213,7 +213,6 @@ StringRef Triple::getOSTypeName(OSType Kind) {
   case Contiki: return "contiki";
   case AMDPAL: return "amdpal";
   case HermitCore: return "hermit";
-  case Hurd: return "hurd";
   }
 
   llvm_unreachable("Invalid OSType");
@@ -294,7 +293,6 @@ Triple::ArchType Triple::getArchTypeForLLVMName(StringRef Name) {
     .Case("tcele", tcele)
     .Case("thumb", thumb)
     .Case("thumbeb", thumbeb)
-    .Case("m680x0", m680x0)
     .Case("x86", x86)
     .Case("x86-64", x86_64)
     .Case("xcore", xcore)
@@ -315,6 +313,7 @@ Triple::ArchType Triple::getArchTypeForLLVMName(StringRef Name) {
     .Case("wasm64", wasm64)
     .Case("renderscript32", renderscript32)
     .Case("renderscript64", renderscript64)
+    .Case("m680x0", m680x0)
     .Default(UnknownArch);
 }
 
@@ -385,9 +384,6 @@ static Triple::ArchType parseARMArch(StringRef ArchName) {
 
 static Triple::ArchType parseArch(StringRef ArchName) {
   auto AT = StringSwitch<Triple::ArchType>(ArchName)
-    .Cases("m680x0", "m68k", Triple::m680x0)
-    .Cases("m68000", "m68010", "m68020", Triple::m680x0)
-    .Cases("m68030", "m68040", "m68060", Triple::m680x0)
     .Cases("i386", "i486", "i586", "i686", Triple::x86)
     // FIXME: Do we need to support these?
     .Cases("i786", "i886", "i986", Triple::x86)
@@ -395,6 +391,7 @@ static Triple::ArchType parseArch(StringRef ArchName) {
     .Cases("powerpc", "ppc", "ppc32", Triple::ppc)
     .Cases("powerpc64", "ppu", "ppc64", Triple::ppc64)
     .Cases("powerpc64le", "ppc64le", Triple::ppc64le)
+    .Case("m680x0", Triple::m680x0)
     .Case("xscale", Triple::arm)
     .Case("xscaleeb", Triple::armeb)
     .Case("aarch64", Triple::aarch64)
@@ -516,7 +513,6 @@ static Triple::OSType parseOS(StringRef OSName) {
     .StartsWith("contiki", Triple::Contiki)
     .StartsWith("amdpal", Triple::AMDPAL)
     .StartsWith("hermit", Triple::HermitCore)
-    .StartsWith("hurd", Triple::Hurd)
     .Default(Triple::UnknownOS);
 }
 
@@ -643,9 +639,9 @@ static Triple::ObjectFormatType getDefaultFormat(const Triple &T) {
   case Triple::aarch64:
   case Triple::arm:
   case Triple::thumb:
-  case Triple::m680x0:  // FIXME should be COFF?
   case Triple::x86:
   case Triple::x86_64:
+  case Triple::m680x0:
     if (T.isOSDarwin())
       return Triple::MachO;
     else if (T.isOSWindows())
@@ -1242,7 +1238,6 @@ static unsigned getArchPointerBitWidth(llvm::Triple::ArchType Arch) {
   case llvm::Triple::tcele:
   case llvm::Triple::thumb:
   case llvm::Triple::thumbeb:
-  case llvm::Triple::m680x0:
   case llvm::Triple::x86:
   case llvm::Triple::xcore:
   case llvm::Triple::amdil:
@@ -1253,6 +1248,7 @@ static unsigned getArchPointerBitWidth(llvm::Triple::ArchType Arch) {
   case llvm::Triple::shave:
   case llvm::Triple::wasm32:
   case llvm::Triple::renderscript32:
+  case llvm::Triple::m680x0:
     return 32;
 
   case llvm::Triple::aarch64:
@@ -1300,7 +1296,6 @@ Triple Triple::get32BitArchVariant() const {
   case Triple::avr:
   case Triple::bpfel:
   case Triple::bpfeb:
-  case Triple::m680x0:
   case Triple::msp430:
   case Triple::systemz:
   case Triple::ppc64le:
@@ -1335,6 +1330,7 @@ Triple Triple::get32BitArchVariant() const {
   case Triple::shave:
   case Triple::wasm32:
   case Triple::renderscript32:
+  case Triple::m680x0:
     // Already 32-bit.
     break;
 
@@ -1374,6 +1370,7 @@ Triple Triple::get64BitArchVariant() const {
   case Triple::xcore:
   case Triple::sparcel:
   case Triple::shave:
+  case Triple::m680x0:
     T.setArch(UnknownArch);
     break;
 
@@ -1487,6 +1484,7 @@ Triple Triple::getLittleEndianArchVariant() const {
   case Triple::ppc:
   case Triple::sparcv9:
   case Triple::systemz:
+  case Triple::m680x0:
 
   // ARM is intentionally unsupported here, changing the architecture would
   // drop any arch suffixes.

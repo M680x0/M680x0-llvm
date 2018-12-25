@@ -1,5 +1,4 @@
-//===-- M680x0RegisterInfo.cpp - CPU0 Register Information -==
-//--------------===//
+//===-- M680x0RegisterInfo.cpp - CPU0 Register Information -----*- C++ -*--===//
 //
 //                     The LLVM Compiler Infrastructure
 //
@@ -7,9 +6,10 @@
 // License. See LICENSE.TXT for details.
 //
 //===----------------------------------------------------------------------===//
-//
-// This file contains the CPU0 implementation of the TargetRegisterInfo class.
-//
+///
+/// \file
+/// This file contains the CPU0 implementation of the TargetRegisterInfo class.
+///
 //===----------------------------------------------------------------------===//
 
 #define DEBUG_TYPE "m680x0-reg-info"
@@ -59,7 +59,7 @@ M680x0RegisterInfo::M680x0RegisterInfo(const M680x0Subtarget &ST)
 //===----------------------------------------------------------------------===//
 // Callee Saved Registers methods
 //===----------------------------------------------------------------------===//
-//
+
 const MCPhysReg *
 M680x0RegisterInfo::getCalleeSavedRegs(const MachineFunction *MF) const {
   return CSR_STD_SaveList;

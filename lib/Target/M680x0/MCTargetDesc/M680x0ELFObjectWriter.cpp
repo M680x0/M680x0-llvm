@@ -1,4 +1,4 @@
-//===---------- M680x0ELFObjectWriter.cpp - M680x0 ELF Writer -------------===//
+//===---------- M680x0ELFObjectWriter.cpp - M680x0 ELF Writer ---*- C++ -*-===//
 //
 //                     The LLVM Compiler Infrastructure
 //
@@ -6,9 +6,15 @@
 // License. See LICENSE.TXT for details.
 //
 //===----------------------------------------------------------------------===//
+///
+/// \file
+/// This file contains definitions for M680x0 ELF Writers
+///
+//===----------------------------------------------------------------------===//
 
 #include "MCTargetDesc/M680x0FixupKinds.h"
 #include "MCTargetDesc/M680x0MCTargetDesc.h"
+
 #include "llvm/BinaryFormat/ELF.h"
 #include "llvm/MC/MCAsmInfo.h"
 #include "llvm/MC/MCContext.h"

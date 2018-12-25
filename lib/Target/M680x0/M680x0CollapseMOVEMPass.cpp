@@ -1,4 +1,4 @@
-//===--- createM680x0CollapseMOVEMPass.cpp - Expand pseudo instructions ---===//
+//===-- createM680x0CollapseMOVEMPass.cpp - Expand MOVEM pass ---*- C++ -*-===//
 //
 //                     The LLVM Compiler Infrastructure
 //
@@ -6,9 +6,11 @@
 // License. See LICENSE.TXT for details.
 //
 //===----------------------------------------------------------------------===//
-//
-// This pass collapse sequential MOVEM instructions into a single one.
-//
+///
+/// \file
+/// This file contains a pass that collapses sequential MOVEM instructions into
+/// a single one.
+///
 //===----------------------------------------------------------------------===//
 
 #include "M680x0.h"
@@ -16,11 +18,13 @@
 #include "M680x0InstrInfo.h"
 #include "M680x0MachineFunction.h"
 #include "M680x0Subtarget.h"
+
 #include "llvm/Analysis/EHPersonalities.h"
 #include "llvm/CodeGen/MachineFunctionPass.h"
 #include "llvm/CodeGen/MachineInstrBuilder.h"
 #include "llvm/CodeGen/MachineRegisterInfo.h"
 #include "llvm/IR/GlobalValue.h"
+
 using namespace llvm;
 
 #define DEBUG_TYPE "M680x0-collapse-movem"
@@ -288,7 +292,7 @@ public:
 };
 
 char M680x0CollapseMOVEM::ID = 0;
-} // End anonymous namespace.
+} // anonymous namespace.
 
 /// Returns an instance of the pseudo instruction expansion pass.
 FunctionPass *llvm::createM680x0CollapseMOVEMPass() {

@@ -1,4 +1,4 @@
-; RUN: llc < %s -mtriple=m68k-linux-gnu -verify-machineinstrs | FileCheck %s -check-prefix=x00
+; RUN: llc < %s -mtriple=m680x0-linux-gnu -verify-machineinstrs | FileCheck %s -check-prefix=x00
 define i32 @A(i32 %Size) {
 ; x00:       sub.l %d1, %d0
 ; x00-NEXT:  and.l #-128

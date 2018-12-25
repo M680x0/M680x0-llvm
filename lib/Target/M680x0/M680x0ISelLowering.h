@@ -6,10 +6,11 @@
 // License. See LICENSE.TXT for details.
 //
 //===----------------------------------------------------------------------===//
-//
-// This file defines the interfaces that M680x0 uses to lower LLVM code into a
-// selection DAG.
-//
+///
+/// \file
+/// This file defines the interfaces that M680x0 uses to lower LLVM code into a
+/// selection DAG.
+///
 //===----------------------------------------------------------------------===//
 
 #ifndef LLVM_LIB_TARGET_M680X0_M680X0ISELLOWERING_H
@@ -21,13 +22,15 @@
 #include "llvm/CodeGen/SelectionDAG.h"
 #include "llvm/CodeGen/TargetLowering.h"
 #include "llvm/IR/Function.h"
+
 #include <deque>
 
 namespace llvm {
 namespace M680x0ISD {
-// M680x0 Specific DAG nodes
+
+/// M680x0 Specific DAG nodes
 enum NodeType {
-  // Start the numbering from where ISD NodeType finishes.
+  /// Start the numbering from where ISD NodeType finishes.
   FIRST_NUMBER = ISD::BUILTIN_OP_END,
 
   CALL,
@@ -106,6 +109,7 @@ bool isCalleePop(CallingConv::ID CallingConv, bool IsVarArg, bool GuaranteeTCO);
 //===--------------------------------------------------------------------===//
 // TargetLowering Implementation
 //===--------------------------------------------------------------------===//
+
 class M680x0MachineFunctionInfo;
 class M680x0Subtarget;
 
@@ -152,8 +156,8 @@ public:
                                              unsigned JTI,
                                              MCContext &Ctx) const override;
 
-  // Replace the results of node with an illegal result type with new values
-  // built out of custom code.
+  /// Replace the results of node with an illegal result type with new values
+  /// built out of custom code.
   // void ReplaceNodeResults(SDNode *N, SmallVectorImpl<SDValue>&Results,
   //                         SelectionDAG &DAG) const override;
 

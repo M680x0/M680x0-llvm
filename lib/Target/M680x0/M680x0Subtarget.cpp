@@ -1,4 +1,4 @@
-//===-- M680x0Subtarget.cpp - M680x0 Subtarget Information ----------------===//
+//===-- M680x0Subtarget.cpp - M680x0 Subtarget Information ------*- C++ -*-===//
 //
 //                     The LLVM Compiler Infrastructure
 //
@@ -6,9 +6,10 @@
 // License. See LICENSE.TXT for details.
 //
 //===----------------------------------------------------------------------===//
-//
-// This file implements the M680x0 specific subclass of TargetSubtargetInfo.
-//
+///
+/// \file
+/// This file implements the M680x0 specific subclass of TargetSubtargetInfo.
+///
 //===----------------------------------------------------------------------===//
 
 #include "M680x0Subtarget.h"
@@ -16,8 +17,8 @@
 #include "M680x0MachineFunction.h"
 #include "M680x0.h"
 #include "M680x0RegisterInfo.h"
-
 #include "M680x0TargetMachine.h"
+
 #include "llvm/IR/Attributes.h"
 #include "llvm/IR/Function.h"
 #include "llvm/CodeGen/MachineJumpTableInfo.h"

@@ -1,4 +1,4 @@
-//===- M680x0InstrBuilder.h - Functions to aid building M680x0 insts  C++ -===//
+//===-- M680x0InstrBuilder.h - Functions to build M680x0 insts --*- C++ -*-===//
 //
 //                     The LLVM Compiler Infrastructure
 //
@@ -6,20 +6,21 @@
 // License. See LICENSE.TXT for details.
 //
 //===----------------------------------------------------------------------===//
-//
-// This file exposes functions that may be used with BuildMI from the
-// MachineInstrBuilder.h file to handle M680x0'isms in a clean way.
-//
-// TODO edit the following mem stuff
-// The BuildMem function may be used with the BuildMI function to add entire
-// memory references in a single, typed, function call.  M680x0 memory references
-// can be very complex expressions (described in the README), so wrapping them
-// up behind an easier to use interface makes sense.  Descriptions of the
-// functions are included below.
-//
-// For reference, the order of operands for memory references is:
-// (Operand), Base, Scale, Index, Displacement.
-//
+///
+/// \file
+/// This file exposes functions that may be used with BuildMI from the
+/// MachineInstrBuilder.h file to handle M680x0'isms in a clean way.
+///
+/// TODO edit the following mem stuff
+/// The BuildMem function may be used with the BuildMI function to add entire
+/// memory references in a single, typed, function call.  M680x0 memory
+/// references can be very complex expressions (described in the README), so
+/// wrapping them up behind an easier to use interface makes sense.
+/// Descriptions of the functions are included below.
+///
+/// For reference, the order of operands for memory references is:
+/// (Operand), Base, Scale, Index, Displacement.
+///
 //===----------------------------------------------------------------------===//
 //
 #ifndef LLVM_LIB_TARGET_M6800_M6800INSTRBUILDER_H
@@ -33,6 +34,7 @@
 #include "llvm/CodeGen/MachineMemOperand.h"
 #include "llvm/CodeGen/MachineOperand.h"
 #include "llvm/MC/MCInstrDesc.h"
+
 #include <cassert>
 
 namespace llvm {
@@ -46,8 +48,8 @@ addOffset(const MachineInstrBuilder &MIB, int Offset) {
 /// of the form (Offset, Base), i.e., one with no scale or index, but with a
 /// displacement. An example is: (4,D0).
 static inline const MachineInstrBuilder &
-addRegIndirectWithDisp(const MachineInstrBuilder &MIB,
-             unsigned Reg, bool isKill, int Offset) {
+addRegIndirectWithDisp(const MachineInstrBuilder &MIB, unsigned Reg,
+                       bool isKill, int Offset) {
   return MIB.addImm(Offset).addReg(Reg, getKillRegState(isKill));
 }
 

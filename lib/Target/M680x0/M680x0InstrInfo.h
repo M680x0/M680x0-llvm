@@ -6,9 +6,10 @@
 // License. See LICENSE.TXT for details.
 //
 //===----------------------------------------------------------------------===//
-//
-// This file contains the M680x0 implementation of the TargetInstrInfo class.
-//
+///
+/// \file
+/// This file contains the M680x0 implementation of the TargetInstrInfo class.
+///
 //===----------------------------------------------------------------------===//
 
 #ifndef LLVM_LIB_TARGET_M680X0_M680X0INSTRINFO_H
@@ -16,7 +17,9 @@
 
 #include "M680x0.h"
 #include "M680x0RegisterInfo.h"
+
 #include "MCTargetDesc/M680x0BaseInfo.h"
+
 #include "llvm/CodeGen/MachineInstrBuilder.h"
 #include "llvm/CodeGen/TargetInstrInfo.h"
 
@@ -209,9 +212,9 @@ public:
 
   static const M680x0InstrInfo *create(M680x0Subtarget &STI);
 
-  /// getRegisterInfo - TargetInstrInfo is a superset of MRegister info.  As
-  /// such, whenever a client has an instance of instruction info, it should
-  /// always be able to get register info as well (through this method).
+  /// TargetInstrInfo is a superset of MRegister info. As such, whenever a
+  /// client has an instance of instruction info, it should always be able to
+  /// get register info as well (through this method).
   const M680x0RegisterInfo &getRegisterInfo() const { return RI; };
 
   unsigned removeBranch(MachineBasicBlock &MBB,
@@ -243,39 +246,39 @@ public:
 
   bool expandPostRAPseudo(MachineInstr &MI) const override;
 
-  // Add appropriate SExt nodes
+  /// Add appropriate SExt nodes
   void AddSExt(MachineBasicBlock &MBB, MachineBasicBlock::iterator I,
                DebugLoc DL, unsigned Reg, MVT From, MVT To) const;
 
-  // Add appropriate ZExt nodes
+  /// Add appropriate ZExt nodes
   void AddZExt(MachineBasicBlock &MBB, MachineBasicBlock::iterator I,
                DebugLoc DL, unsigned Reg, MVT From, MVT To) const;
 
-  // Move across register classes without extension
+  /// Move across register classes without extension
   bool ExpandMOVX_RR(MachineInstrBuilder &MIB, MVT MVTDst, MVT MVTSrc) const;
 
-  // Move from register and extend
+  /// Move from register and extend
   bool ExpandMOVSZX_RR(MachineInstrBuilder &MIB, bool isSigned, MVT MVTDst,
                        MVT MVTSrc) const;
 
-  // Move from memory and extend
+  /// Move from memory and extend
   bool ExpandMOVSZX_RM(MachineInstrBuilder &MIB, bool isSigned,
                        const MCInstrDesc &Desc, MVT MVTDst, MVT MVTSrc) const;
 
-  // Push/Pop to/from stack
+  /// Push/Pop to/from stack
   bool ExpandPUSH_POP(MachineInstrBuilder &MIB, const MCInstrDesc &Desc,
                       bool isPush) const;
 
-  // Moves to/from CCR
+  /// Moves to/from CCR
   bool ExpandCCR(MachineInstrBuilder &MIB, bool isToCCR) const;
 
-  // Expand all MOVEM pseudos into real MOVEMs
+  /// Expand all MOVEM pseudos into real MOVEMs
   bool ExpandMOVEM(MachineInstrBuilder &MIB, const MCInstrDesc &Desc,
                    bool isRM) const;
 
-  /// getGlobalBaseReg - Return a virtual register initialized with the
-  /// the global base register value. Output instructions required to
-  /// initialize the register in the function entry block, if necessary.
+  /// Return a virtual register initialized with the the global base register
+  /// value. Output instructions required to initialize the register in the
+  /// function entry block, if necessary.
   unsigned getGlobalBaseReg(MachineFunction *MF) const;
 
   std::pair<unsigned, unsigned>

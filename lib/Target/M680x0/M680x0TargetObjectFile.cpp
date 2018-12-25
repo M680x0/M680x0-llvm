@@ -1,10 +1,15 @@
-//===-- M680x0ELFTargetObjectFile.cpp - M680x0 Object Files ---------------===//
+//===-- M680x0ELFTargetObjectFile.cpp - M680x0 Object Files -----*- C++ -*-===//
 //
 //                     The LLVM Compiler Infrastructure
 //
 // This file is distributed under the University of Illinois Open Source
 // License. See LICENSE.TXT for details.
 //
+//===----------------------------------------------------------------------===//
+///
+/// \file
+/// This file contains definitions for M680x0 ELF object file lowering.
+///
 //===----------------------------------------------------------------------===//
 
 #include "M680x0TargetObjectFile.h"
@@ -20,6 +25,7 @@
 #include "llvm/MC/MCSectionELF.h"
 #include "llvm/Support/CommandLine.h"
 #include "llvm/Target/TargetMachine.h"
+
 using namespace llvm;
 
 static cl::opt<unsigned> SSThreshold(

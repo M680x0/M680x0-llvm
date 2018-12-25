@@ -1,4 +1,4 @@
-//===-- M680x0InstrArithmetic.td - Integer Arithmetic Instrs - tablegen -*-===//
+//===-- M680x0InstrArithmetic.td - Integer Arith Instrs ----*- tablegen -*-===//
 //
 //                     The LLVM Compiler Infrastructure
 //
@@ -6,25 +6,26 @@
 // License. See LICENSE.TXT for details.
 //
 //===----------------------------------------------------------------------===//
-//
-// This file describes the integer arithmetic instructions in the M680x0
-// architecture. Here is the current status of the file:
-//
-//  Machine:
-//
-//    ADD       [~]   ADDA      [~]   ADDI        [~]   ADDQ [ ]   ADDX [~]
-//    CLR       [ ]   CMP       [~]   CMPA        [~]   CMPI [~]   CMPM [ ]
-//    CMP2      [ ]   DIVS/DIVU [~]   DIVSL/DIVUL [ ]   EXT  [~]   EXTB [ ]
-//    MULS/MULU [~]   NEG       [~]   NEGX        [~]   SUB  [~]   SUBA [~]
-//    SUBI      [~]   SUBQ      [ ]   SUBX        [~]
-//
-//  Map:
-//
-//   [ ] - was not touched at all
-//   [!] - requires extarnal stuff implemented
-//   [~] - functional implementation
-//   [X] - complete implementation
-//
+///
+/// \file
+/// This file describes the integer arithmetic instructions in the M680x0
+/// architecture. Here is the current status of the file:
+///
+///  Machine:
+///
+///    ADD       [~]   ADDA      [~]   ADDI        [~]   ADDQ [ ]   ADDX [~]
+///    CLR       [ ]   CMP       [~]   CMPA        [~]   CMPI [~]   CMPM [ ]
+///    CMP2      [ ]   DIVS/DIVU [~]   DIVSL/DIVUL [ ]   EXT  [~]   EXTB [ ]
+///    MULS/MULU [~]   NEG       [~]   NEGX        [~]   SUB  [~]   SUBA [~]
+///    SUBI      [~]   SUBQ      [ ]   SUBX        [~]
+///
+///  Map:
+///
+///   [ ] - was not touched at all
+///   [!] - requires extarnal stuff implemented
+///   [~] - functional implementation
+///   [X] - complete implementation
+///
 //===----------------------------------------------------------------------===//
 
 //===----------------------------------------------------------------------===//

@@ -1,4 +1,4 @@
-//===-- M680x0InstrInfo.cpp - M680x0 Instruction Information --------------===//
+//===-- M680x0InstrInfo.cpp - M680x0 Instruction Information ----*- C++ -*-===//
 //
 //                     The LLVM Compiler Infrastructure
 //
@@ -6,9 +6,10 @@
 // License. See LICENSE.TXT for details.
 //
 //===----------------------------------------------------------------------===//
-//
-// This file contains the M680x0 implementation of the TargetInstrInfo class.
-//
+///
+/// \file
+/// This file contains the M680x0 declaration of the TargetInstrInfo class.
+///
 //===----------------------------------------------------------------------===//
 
 #include "M680x0InstrInfo.h"
@@ -16,6 +17,7 @@
 #include "M680x0InstrBuilder.h"
 #include "M680x0MachineFunction.h"
 #include "M680x0TargetMachine.h"
+
 #include "llvm/ADT/STLExtras.h"
 #include "llvm/CodeGen/LivePhysRegs.h"
 #include "llvm/CodeGen/LiveVariables.h"
@@ -581,9 +583,10 @@ void M680x0InstrInfo::loadRegFromStackSlot(
   addFrameReference(BuildMI(MBB, MI, DL, get(Opc), DstReg), FI);
 }
 
-/// Return a virtual register initialized with the
-/// the global base register value. Output instructions required to
-/// initialize the register in the function entry block, if necessary.
+/// Return a virtual register initialized with the the global base register
+/// value. Output instructions required to initialize the register in the
+/// function entry block, if necessary.
+///
 /// TODO: Eliminate this and move the code to M680x0MachineFunctionInfo.
 unsigned M680x0InstrInfo::getGlobalBaseReg(MachineFunction *MF) const {
   M680x0MachineFunctionInfo *MxFI = MF->getInfo<M680x0MachineFunctionInfo>();

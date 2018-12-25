@@ -1,4 +1,4 @@
-//== M680x0InstrData.td - M680x0 Data Movement Instructions  -- tablegen --===//
+//== M680x0InstrData.td - M680x0 Data Movement Instructions -*- tablegen --===//
 //
 //                     The LLVM Compiler Infrastructure
 //
@@ -6,28 +6,29 @@
 // License. See LICENSE.TXT for details.
 //
 //===----------------------------------------------------------------------===//
-//
-// This file describes the Motorola 680x0 data movement instructions which are
-// the basic means of transferring and storing addresses and data. Here is the
-// current status of the file:
-//
-//  Machine:
-//
-//     EXG   [ ]     FMOVE [ ]     FSMOVE [ ]     FDMOVE [ ]     FMOVEM [ ]
-//     LEA   [~]     PEA   [ ]     MOVE   [~]     MOVE16 [ ]     MOVEA  [ ]
-//     MOVEM [ ]     MOVEP [ ]     MOVEQ  [ ]     LINK   [ ]     UNLK   [ ]
-//
-//  Pseudo:
-//
-//     MOVSX [x]     MOVZX [x]     MOVX   [x]
-//
-//  Map:
-//
-//   [ ] - was not touched at all
-//   [!] - requires extarnal stuff implemented
-//   [~] - in progress but usable
-//   [x] - done
-//
+///
+/// \file
+/// This file describes the Motorola 680x0 data movement instructions which are
+/// the basic means of transferring and storing addresses and data. Here is the
+/// current status of the file:
+///
+///  Machine:
+///
+///     EXG   [ ]     FMOVE [ ]     FSMOVE [ ]     FDMOVE [ ]     FMOVEM [ ]
+///     LEA   [~]     PEA   [ ]     MOVE   [~]     MOVE16 [ ]     MOVEA  [ ]
+///     MOVEM [ ]     MOVEP [ ]     MOVEQ  [ ]     LINK   [ ]     UNLK   [ ]
+///
+///  Pseudo:
+///
+///     MOVSX [x]     MOVZX [x]     MOVX   [x]
+///
+///  Map:
+///
+///   [ ] - was not touched at all
+///   [!] - requires extarnal stuff implemented
+///   [~] - in progress but usable
+///   [x] - done
+///
 //===----------------------------------------------------------------------===//
 
 //===----------------------------------------------------------------------===//

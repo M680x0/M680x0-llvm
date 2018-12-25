@@ -1,4 +1,4 @@
-//===-- M680x0MCCodeEmitter.cpp - Convert M680x0 code to machine code -----===//
+//===-- M680x0MCCodeEmitter.cpp - Convert M680x0 code emitter ---*- C++ -*-===//
 //
 //                     The LLVM Compiler Infrastructure
 //
@@ -6,11 +6,18 @@
 // License. See LICENSE.TXT for details.
 //
 //===----------------------------------------------------------------------===//
+///
+/// \file
+/// This file contains defintions for M680x0 code emitter.
+///
+//===----------------------------------------------------------------------===//
 
 #include "M680x0RegisterInfo.h"
+
 #include "MCTargetDesc/M680x0BaseInfo.h"
 #include "MCTargetDesc/M680x0FixupKinds.h"
 #include "MCTargetDesc/M680x0MCTargetDesc.h"
+
 #include "llvm/MC/MCCodeEmitter.h"
 #include "llvm/MC/MCContext.h"
 #include "llvm/MC/MCExpr.h"
@@ -39,7 +46,7 @@ public:
 
   ~M680x0MCCodeEmitter() override {}
 
-  // getGenInstrBeads - TableGen'erated function
+  // TableGen'erated function
   const uint8_t *getGenInstrBeads(const MCInst &MI) const;
 
   unsigned EncodeBits(unsigned ThisByte, uint8_t Bead, const MCInst &MI,
@@ -88,7 +95,7 @@ unsigned M680x0MCCodeEmitter::EncodeBits(unsigned ThisByte, uint8_t Bead,
   unsigned char Val = (Bead & 0xF0) >> 4;
 
   LLVM_DEBUG(dbgs() << "\tEncodeBits"
-               << " Num: " << Num << " Val: 0x");
+                    << " Num: " << Num << " Val: 0x");
   LLVM_DEBUG(dbgs().write_hex(Val) << "\n");
 
   Buffer |= (Val << Offset);
@@ -121,8 +128,8 @@ unsigned M680x0MCCodeEmitter::EncodeReg(unsigned ThisByte, uint8_t Bead,
   unsigned Op = (Bead & 0x70) >> 4;
   bool Alt = (Bead & 0x80);
   LLVM_DEBUG(dbgs() << "\tEncodeReg"
-               << " Op: " << Op << ", DA: " << DA << ", Reg: " << Reg
-               << ", Alt: " << Alt << "\n");
+                    << " Op: " << Op << ", DA: " << DA << ", Reg: " << Reg
+                    << ", Alt: " << Alt << "\n");
 
   assert(Op < Desc.NumMIOperands);
   MIOperandInfo MIO = Desc.MIOpInfo[Op];
@@ -160,14 +167,13 @@ unsigned M680x0MCCodeEmitter::EncodeReg(unsigned ThisByte, uint8_t Bead,
 
   return Written;
 }
-/// uintDoesFit - Checks if an unsigned integer fits into the given bit width.
-/// non-templated version
+/// Checks if an unsigned integer fits into the given bit width.  non-templated
+/// version
 constexpr static inline bool uintDoesFit(unsigned N, uint64_t x) {
   return N >= 64 || x <= (UINT64_MAX >> (64 - N));
 }
 
-/// uintDoesFit - Checks if an integer fits into the given bit width.
-/// non-templated version
+/// Checks if an integer fits into the given bit width.  non-templated version
 constexpr static inline bool intDoesFit(unsigned N, int64_t x) {
   return N >= 64 ||
          (-(INT64_C(1) << (N - 1)) <= x && x < (INT64_C(1) << (N - 1)));
@@ -248,8 +254,8 @@ unsigned M680x0MCCodeEmitter::EncodeImm(unsigned ThisByte, uint8_t Bead,
   }
 
   LLVM_DEBUG(dbgs() << "\tEncodeImm"
-               << " Op: " << Op << ", Size: " << Size << ", Alt: " << Alt
-               << "\n");
+                    << " Op: " << Op << ", Size: " << Size << ", Alt: " << Alt
+                    << "\n");
 
   MCOperand MCO;
   if (MIO.isTargetType()) {
@@ -334,8 +340,8 @@ void M680x0MCCodeEmitter::encodeInstruction(const MCInst &MI, raw_ostream &OS,
   const MCInstrDesc &Desc = MCII.get(Opcode);
   // uint64_t TSFlags = Desc.TSFlags;
 
-  LLVM_DEBUG(dbgs() << "EncodeInstruction: " << MCII.getName(Opcode) << "(" << Opcode
-               << ")\n");
+  LLVM_DEBUG(dbgs() << "EncodeInstruction: " << MCII.getName(Opcode) << "("
+                    << Opcode << ")\n");
 
   const uint8_t *Beads = getGenInstrBeads(MI);
   if (!*Beads) {

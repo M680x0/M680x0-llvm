@@ -1,4 +1,4 @@
-//===-- M680x0ISelLowering.cpp - M680x0 DAG Lowering Implementation -------===//
+//===-- M680x0ISelLowering.cpp - M680x0 DAG Lowering Impl ------*- C++ -*--===//
 //
 //                     The LLVM Compiler Infrastructure
 //
@@ -6,11 +6,13 @@
 // License. See LICENSE.TXT for details.
 //
 //===----------------------------------------------------------------------===//
-//
-// This file defines the interfaces that M680x0 uses to lower LLVM code into a
-// selection DAG.
-//
+///
+/// \file
+/// This file defines the interfaces that M680x0 uses to lower LLVM code into a
+/// selection DAG.
+///
 //===----------------------------------------------------------------------===//
+
 #include "M680x0CallingConv.h"
 #include "M680x0ISelLowering.h"
 #include "M680x0MachineFunction.h"
@@ -83,6 +85,7 @@ M680x0TargetLowering::M680x0TargetLowering(const M680x0TargetMachine &TM,
   setOperationAction(ISD::MUL, MVT::i8, Legal);
   setOperationAction(ISD::MUL, MVT::i16, Legal);
   setOperationAction(ISD::MUL, MVT::i32, Custom);
+  setOperationAction(ISD::MUL, MVT::i64, LibCall);
 
   for (auto OP :
        {ISD::SDIV, ISD::UDIV, ISD::SREM, ISD::UREM, ISD::UDIVREM, ISD::SDIVREM,
@@ -1620,8 +1623,7 @@ static SDValue LowerAndToBT(SDValue And, ISD::CondCode CC, const SDLoc &DL,
       unsigned BitWidth = Op0.getValueSizeInBits();
       unsigned AndBitWidth = And.getValueSizeInBits();
       if (BitWidth > AndBitWidth) {
-        KnownBits Known;
-        DAG.computeKnownBits(Op0, Known);
+        auto Known = DAG.computeKnownBits(Op0);
         if (Known.countMinLeadingZeros() < BitWidth - AndBitWidth)
           return SDValue();
       }
@@ -3646,8 +3648,8 @@ static SDValue combineADDX(SDNode *N, SelectionDAG &DAG,
   //   SDValue Res1 =
   //       DAG.getNode(ISD::AND, DL, VT,
   //                   DAG.getNode(M680x0ISD::SETCC_CARRY, DL, VT,
-  //                               DAG.getConstant(M680x0::COND_CS, DL, MVT::i8),
-  //                               N->getOperand(2)),
+  //                               DAG.getConstant(M680x0::COND_CS, DL,
+  //                               MVT::i8), N->getOperand(2)),
   //                   DAG.getConstant(1, DL, VT));
   //   return DCI.CombineTo(N, Res1, CarryOut);
   // }

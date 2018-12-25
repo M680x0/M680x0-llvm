@@ -1,4 +1,4 @@
-; RUN: llc < %s -mtriple=m680x0-linux | FileCheck %s --check-prefix=x00
+; RUN: llc < %s -O0 -mtriple=m680x0-linux | FileCheck %s --check-prefix=x00
 
 ; x00-LABEL: mul4_32:
 ; x00:       lsl.l
@@ -119,19 +119,16 @@ define i32 @mul0_32(i32 %A) {
 }
 
 ; x00-LABEL: mul4294967295_32:
-; x00:       move.l #0
-; x00:       sub.l
+; x00: neg.l %d0
 define i32 @mul4294967295_32(i32 %A) {
     %mul = mul i32 %A, 4294967295
     ret i32 %mul
 }
 
 ; x00-LABEL: mul18446744073709551615_64:
-; x00-DAG: move.l (4,%sp), %d0
-; x00-DAG: move.l #0, %d1
-; x00:     sub.l (8,%sp), %d1
-; x00:     negx.l %d0
-; x00:     rts
+; x00: neg.l %d0
+; x00: negx.l %d1
+; x00: rts
 define i64 @mul18446744073709551615_64(i64 %A) {
     %mul = mul i64 %A, 18446744073709551615
     ret i64 %mul

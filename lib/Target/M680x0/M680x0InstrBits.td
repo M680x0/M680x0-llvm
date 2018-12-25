@@ -1,4 +1,4 @@
-//===------- M680x0InstrBits.td - Bit Manipulation Instrs ---- tablegen -*-===//
+//===------- M680x0InstrBits.td - Bit Manipulation Instrs --*- tablegen -*-===//
 //
 //                     The LLVM Compiler Infrastructure
 //
@@ -6,21 +6,22 @@
 // License. See LICENSE.TXT for details.
 //
 //===----------------------------------------------------------------------===//
-//
-// This file describes the bit manipulation instructions in the M680x0
-// architecture. Here is the current status of the file:
-//
-//  Machine:
-//
-//    BCNG    [ ]   BCLR    [ ]   BSET     [ ]   BTST     [~]
-//
-//  Map:
-//
-//   [ ] - was not touched at all
-//   [!] - requires extarnal stuff implemented
-//   [~] - in progress but usable
-//   [x] - done
-//
+///
+/// \file
+/// This file describes the bit manipulation instructions in the M680x0
+/// architecture. Here is the current status of the file:
+///
+///  Machine:
+///
+///    BCNG    [ ]   BCLR    [ ]   BSET     [ ]   BTST     [~]
+///
+///  Map:
+///
+///   [ ] - was not touched at all
+///   [!] - requires extarnal stuff implemented
+///   [~] - in progress but usable
+///   [x] - done
+///
 //===----------------------------------------------------------------------===//
 
 //===----------------------------------------------------------------------===//

@@ -1,4 +1,4 @@
-//===-- M680x0MCInstLower.cpp - Convert M680x0 MachineInstr to MCInst ---------===//
+//===-- M680x0MCInstLower.cpp - M680x0 MachineInstr to MCInst ---*- C++ -*-===//
 //
 //                     The LLVM Compiler Infrastructure
 //
@@ -6,17 +6,20 @@
 // License. See LICENSE.TXT for details.
 //
 //===----------------------------------------------------------------------===//
-//
-// This file contains code to lower M680x0 MachineInstrs to their corresponding
-// MCInst records.
-//
+///
+/// \file
+/// This file contains code to lower M680x0 MachineInstrs to their
+/// corresponding MCInst records.
+///
 //===----------------------------------------------------------------------===//
 
 #include "M680x0MCInstLower.h"
 
 #include "M680x0AsmPrinter.h"
 #include "M680x0InstrInfo.h"
+
 #include "MCTargetDesc/M680x0BaseInfo.h"
+
 #include "llvm/CodeGen/MachineFunction.h"
 #include "llvm/CodeGen/MachineInstr.h"
 #include "llvm/CodeGen/MachineOperand.h"
@@ -27,15 +30,14 @@
 
 using namespace llvm;
 
-M680x0MCInstLower::
-M680x0MCInstLower(MachineFunction &MF, M680x0AsmPrinter &AP)
-    : Ctx(MF.getContext()), MF(MF), TM(MF.getTarget()),
-      MAI(*TM.getMCAsmInfo()), AsmPrinter(AP) {}
+M680x0MCInstLower::M680x0MCInstLower(MachineFunction &MF, M680x0AsmPrinter &AP)
+    : Ctx(MF.getContext()), MF(MF), TM(MF.getTarget()), MAI(*TM.getMCAsmInfo()),
+      AsmPrinter(AP) {}
 
-MCSymbol *M680x0MCInstLower::
-GetSymbolFromOperand(const MachineOperand &MO) const {
-  assert((MO.isGlobal() || MO.isSymbol() || MO.isMBB())
-      && "Isn't a symbol reference");
+MCSymbol *
+M680x0MCInstLower::GetSymbolFromOperand(const MachineOperand &MO) const {
+  assert((MO.isGlobal() || MO.isSymbol() || MO.isMBB()) &&
+         "Isn't a symbol reference");
 
   const DataLayout &DL = MF.getDataLayout();
 
@@ -63,22 +65,32 @@ GetSymbolFromOperand(const MachineOperand &MO) const {
   return Sym;
 }
 
-MCOperand M680x0MCInstLower::
-LowerSymbolOperand(const MachineOperand &MO, MCSymbol *Sym) const {
+MCOperand M680x0MCInstLower::LowerSymbolOperand(const MachineOperand &MO,
+                                                MCSymbol *Sym) const {
   // FIXME: We would like an efficient form for this, so we don't have to do a
   // lot of extra uniquing.
   const MCExpr *Expr = nullptr;
   MCSymbolRefExpr::VariantKind RefKind = MCSymbolRefExpr::VK_None;
 
   switch (MO.getTargetFlags()) {
-  default: llvm_unreachable("Unknown target flag on GV operand");
+  default:
+    llvm_unreachable("Unknown target flag on GV operand");
   case M680x0II::MO_NO_FLAG:
   case M680x0II::MO_ABSOLUTE_ADDRESS:
-  case M680x0II::MO_PC_RELATIVE_ADDRESS: break;
-  case M680x0II::MO_GOTPCREL:  RefKind = MCSymbolRefExpr::VK_GOTPCREL; break;
-  case M680x0II::MO_GOT:       RefKind = MCSymbolRefExpr::VK_GOT;      break;
-  case M680x0II::MO_GOTOFF:    RefKind = MCSymbolRefExpr::VK_GOTOFF;   break;
-  case M680x0II::MO_PLT:       RefKind = MCSymbolRefExpr::VK_PLT;      break;
+  case M680x0II::MO_PC_RELATIVE_ADDRESS:
+    break;
+  case M680x0II::MO_GOTPCREL:
+    RefKind = MCSymbolRefExpr::VK_GOTPCREL;
+    break;
+  case M680x0II::MO_GOT:
+    RefKind = MCSymbolRefExpr::VK_GOT;
+    break;
+  case M680x0II::MO_GOTOFF:
+    RefKind = MCSymbolRefExpr::VK_GOTOFF;
+    break;
+  case M680x0II::MO_PLT:
+    RefKind = MCSymbolRefExpr::VK_PLT;
+    break;
   }
 
   if (!Expr) {
@@ -86,16 +98,16 @@ LowerSymbolOperand(const MachineOperand &MO, MCSymbol *Sym) const {
   }
 
   if (!MO.isJTI() && !MO.isMBB() && MO.getOffset()) {
-    Expr = MCBinaryExpr::createAdd(Expr,
-           MCConstantExpr::create(MO.getOffset(), Ctx), Ctx);
+    Expr = MCBinaryExpr::createAdd(
+        Expr, MCConstantExpr::create(MO.getOffset(), Ctx), Ctx);
   }
 
   return MCOperand::createExpr(Expr);
 }
 
-Optional<MCOperand> M680x0MCInstLower::
-LowerOperand(const MachineInstr *MI,
-             const MachineOperand &MO) const {
+Optional<MCOperand>
+M680x0MCInstLower::LowerOperand(const MachineInstr *MI,
+                                const MachineOperand &MO) const {
   switch (MO.getType()) {
   default:
     MI->dump();
@@ -126,8 +138,7 @@ LowerOperand(const MachineInstr *MI,
   }
 }
 
-void M680x0MCInstLower::
-Lower(const MachineInstr *MI, MCInst &OutMI) const {
+void M680x0MCInstLower::Lower(const MachineInstr *MI, MCInst &OutMI) const {
   OutMI.setOpcode(MI->getOpcode());
 
   for (unsigned i = 0, e = MI->getNumOperands(); i != e; ++i) {
@@ -142,12 +153,17 @@ Lower(const MachineInstr *MI, MCInst &OutMI) const {
 
   // TAILJMPj, TAILJMPq - Lower to the correct jump instructions.
   case M680x0::TAILJMPj:
-  case M680x0::TAILJMPq:{
+  case M680x0::TAILJMPq: {
     unsigned Opcode;
     switch (OutMI.getOpcode()) {
-    default: llvm_unreachable("Invalid opcode");
-    case M680x0::TAILJMPj: Opcode = M680x0::JMP32j; break;
-    case M680x0::TAILJMPq: Opcode = M680x0::BRA8; break;
+    default:
+      llvm_unreachable("Invalid opcode");
+    case M680x0::TAILJMPj:
+      Opcode = M680x0::JMP32j;
+      break;
+    case M680x0::TAILJMPq:
+      Opcode = M680x0::BRA8;
+      break;
     }
 
     MCOperand Saved = OutMI.getOperand(0);

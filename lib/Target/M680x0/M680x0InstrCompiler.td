@@ -1,4 +1,4 @@
-//===-- M680x0InstrCompiler.td - Compiler Pseudos and Patterns tablegen -*-===//
+//===-- M680x0InstrCompiler.td - Pseudos and Patterns ------*- tablegen -*-===//
 //
 //                     The LLVM Compiler Infrastructure
 //
@@ -6,10 +6,11 @@
 // License. See LICENSE.TXT for details.
 //
 //===----------------------------------------------------------------------===//
-//
-// This file describes the various pseudo instructions used by the compiler,
-// as well as Pat patterns used during instruction selection.
-//
+///
+/// \file
+/// This file describes the various pseudo instructions used by the compiler,
+/// as well as Pat patterns used during instruction selection.
+///
 //===----------------------------------------------------------------------===//
 
 //===----------------------------------------------------------------------===//

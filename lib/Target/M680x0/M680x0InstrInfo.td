@@ -1,4 +1,4 @@
-//== M680x0InstrInfo.td - Main Motorola 680x0 Instruction Definition tablegen =//
+//== M680x0InstrInfo.td - Main M680x0 Instruction Definition -*- tablegen -*-=//
 //
 //                     The LLVM Compiler Infrastructure
 //
@@ -6,11 +6,12 @@
 // License. See LICENSE.TXT for details.
 //
 //===----------------------------------------------------------------------===//
-//
-// This file describes the M680x0 instruction set, defining the instructions and
-// properties of the instructions which are needed for code generation, machine
-// code emission, and analysis.
-//
+///
+/// \file
+/// This file describes the M680x0 instruction set, defining the instructions
+/// and properties of the instructions which are needed for code generation,
+/// machine code emission, and analysis.
+///
 //===----------------------------------------------------------------------===//
 
 include "M680x0InstrFormats.td"

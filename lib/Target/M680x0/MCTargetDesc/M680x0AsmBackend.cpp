@@ -1,4 +1,4 @@
-//===-- M680x0AsmBackend.cpp - M680x0 Assembler Backend -------------------===//
+//===-- M680x0AsmBackend.cpp - M680x0 Assembler Backend ---------*- C++ -*-===//
 //
 //                     The LLVM Compiler Infrastructure
 //
@@ -6,9 +6,15 @@
 // License. See LICENSE.TXT for details.
 //
 //===----------------------------------------------------------------------===//
+///
+/// \file
+/// This file contains definitions for M680x0 assembler backend.
+///
+//===----------------------------------------------------------------------===//
 
 #include "MCTargetDesc/M680x0BaseInfo.h"
 #include "MCTargetDesc/M680x0FixupKinds.h"
+
 #include "llvm/ADT/StringSwitch.h"
 #include "llvm/BinaryFormat/ELF.h"
 #include "llvm/BinaryFormat/MachO.h"
@@ -74,11 +80,9 @@ public:
   /// Returns the minimum size of a nop in bytes on this target. The assembler
   /// will use this to emit excess padding in situations where the padding
   /// required for simple alignment would be less than the minimum nop size.
-  ///
   unsigned getMinimumNopSize() const override { return 2; }
 
-  /// \brief Write a sequence of optimal nops to the output, covering \p Count
-  /// bytes.
+  /// Write a sequence of optimal nops to the output, covering \p Count bytes.
   /// \return - true on success, false on failure
   bool writeNopData(raw_ostream &OS, uint64_t Count) const override;
 };

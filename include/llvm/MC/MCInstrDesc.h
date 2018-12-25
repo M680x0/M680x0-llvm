@@ -63,9 +63,9 @@ enum OperandType {
 
 class MIOperandInfo {
   public:
-    int8_t MINo;
-    int8_t Type;
-    int8_t OpsNum;
+    std::int16_t MINo;
+    std::int16_t Type;
+    std::int16_t OpsNum;
 
     bool isTargetType() { return Type >= MCOI::OPERAND_FIRST_TARGET; };
 };

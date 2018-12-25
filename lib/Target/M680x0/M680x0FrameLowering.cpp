@@ -1,5 +1,4 @@
-//===-- M680x0FrameLowering.cpp - M680x0 Frame Information
-//--------------------===//
+//===-- M680x0FrameLowering.cpp - M680x0 Frame Information ------*- C++ -*-===//
 //
 //                     The LLVM Compiler Infrastructure
 //
@@ -7,9 +6,10 @@
 // License. See LICENSE.TXT for details.
 //
 //===----------------------------------------------------------------------===//
-//
-// This file contains the M680x0 implementation of TargetFrameLowering class.
-//
+///
+/// \file
+/// This file contains the M680x0 implementation of TargetFrameLowering class.
+///
 //===----------------------------------------------------------------------===//
 
 #include "M680x0FrameLowering.h"
@@ -349,8 +349,8 @@ MachineBasicBlock::iterator M680x0FrameLowering::eliminateCallFramePseudoInstr(
   return I;
 }
 
-/// emitSPUpdate - Emit a series of instructions to increment / decrement the
-/// stack pointer by a constant value.
+/// Emit a series of instructions to increment / decrement the stack pointer by
+/// a constant value.
 void M680x0FrameLowering::emitSPUpdate(MachineBasicBlock &MBB,
                                        MachineBasicBlock::iterator &MBBI,
                                        int64_t NumBytes,

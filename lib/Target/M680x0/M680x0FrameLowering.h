@@ -1,4 +1,4 @@
-//===-- M680x0FrameLowering.h - Define frame lowering for M680x0 --- C++ --===//
+//===- M680x0FrameLowering.h - Define frame lowering for M680x0 -*- C++ -*-===//
 //
 //                     The LLVM Compiler Infrastructure
 //
@@ -6,14 +6,17 @@
 // License. See LICENSE.TXT for details.
 //
 //===----------------------------------------------------------------------===//
-//
-// This file contains the M680x0 declaration of TargetFrameLowering class.
-//
+///
+/// \file
+/// This file contains the M680x0 declaration of TargetFrameLowering class.
+///
 //===----------------------------------------------------------------------===//
+
 #ifndef LLVM_LIB_TARGET_M680X0_M680X0FRAMELOWERING_H
 #define LLVM_LIB_TARGET_M680X0_M680X0FRAMELOWERING_H
 
 #include "M680x0.h"
+
 #include "llvm/CodeGen/TargetFrameLowering.h"
 
 namespace llvm {
@@ -24,8 +27,8 @@ class M680x0RegisterInfo;
 
 class M680x0FrameLowering : public TargetFrameLowering {
   // Cached subtarget predicates.
-  const M680x0Subtarget    &STI;
-  const TargetInstrInfo    &TII;
+  const M680x0Subtarget &STI;
+  const TargetInstrInfo &TII;
   const M680x0RegisterInfo *TRI;
 
   /// Stack slot size in bytes.
@@ -33,10 +36,10 @@ class M680x0FrameLowering : public TargetFrameLowering {
 
   unsigned StackPtr;
 
-  // If we're forcing a stack realignment we can't rely on just the frame
-  // info, we need to know the ABI stack alignment as well in case we
-  // have a call out.  Otherwise just make sure we have some alignment - we'll
-  // go with the minimum SlotSize.
+  /// If we're forcing a stack realignment we can't rely on just the frame
+  /// info, we need to know the ABI stack alignment as well in case we have a
+  /// call out.  Otherwise just make sure we have some alignment - we'll go
+  /// with the minimum SlotSize.
   uint64_t calculateMaxStackAlign(const MachineFunction &MF) const;
 
   /// Adjusts the stack pointer using LEA, SUB, or ADD.
@@ -75,9 +78,10 @@ public:
   eliminateCallFramePseudoInstr(MachineFunction &MF, MachineBasicBlock &MBB,
                                 MachineBasicBlock::iterator MI) const override;
 
-  /// emitProlog/emitEpilog - These methods insert prolog and epilog code into
-  /// the function.
+  /// Insert prolog code into the function.
   void emitPrologue(MachineFunction &MF, MachineBasicBlock &MBB) const override;
+
+  /// Insert epilog code into the function.
   void emitEpilogue(MachineFunction &MF, MachineBasicBlock &MBB) const override;
 
   /// This method determines which of the registers reported by
@@ -90,64 +94,64 @@ public:
   void determineCalleeSaves(MachineFunction &MF, BitVector &SavedRegs,
                             RegScavenger *RS = nullptr) const override;
 
-  /// assignCalleeSavedSpillSlots - Allows target to override spill slot
-  /// assignment logic.  If implemented, assignCalleeSavedSpillSlots() should
-  /// assign frame slots to all CSI entries and return true.  If this method
-  /// returns false, spill slots will be assigned using generic implementation.
-  /// assignCalleeSavedSpillSlots() may add, delete or rearrange elements of CSI.
-  bool assignCalleeSavedSpillSlots(MachineFunction &MF,
+  /// Allows target to override spill slot assignment logic.  If implemented,
+  /// assignCalleeSavedSpillSlots() should assign frame slots to all CSI
+  /// entries and return true.  If this method returns false, spill slots will
+  /// be assigned using generic implementation.  assignCalleeSavedSpillSlots()
+  /// may add, delete or rearrange elements of CSI.
+  bool
+  assignCalleeSavedSpillSlots(MachineFunction &MF,
                               const TargetRegisterInfo *TRI,
                               std::vector<CalleeSavedInfo> &CSI) const override;
 
-  /// spillCalleeSavedRegisters - Issues instruction(s) to spill all callee
-  /// saved registers and returns true if it isn't possible / profitable to do
-  /// so by issuing a series of store instructions via
-  /// storeRegToStackSlot(). Returns false otherwise.
+  /// Issues instruction(s) to spill all callee saved registers and returns
+  /// true if it isn't possible / profitable to do so by issuing a series of
+  /// store instructions via storeRegToStackSlot(). Returns false otherwise.
   bool spillCalleeSavedRegisters(MachineBasicBlock &MBB,
                                  MachineBasicBlock::iterator MI,
                                  const std::vector<CalleeSavedInfo> &CSI,
                                  const TargetRegisterInfo *TRI) const override;
 
-  /// restoreCalleeSavedRegisters - Issues instruction(s) to restore all callee
-  /// saved registers and returns true if it isn't possible / profitable to do
-  /// so by issuing a series of load instructions via loadRegToStackSlot().
-  /// Returns false otherwise.
-  bool restoreCalleeSavedRegisters(MachineBasicBlock &MBB,
-                                  MachineBasicBlock::iterator MI,
-                                  std::vector<CalleeSavedInfo> &CSI,
-                                  const TargetRegisterInfo *TRI) const override;
+  /// Issues instruction(s) to restore all callee saved registers and returns
+  /// true if it isn't possible / profitable to do so by issuing a series of
+  /// load instructions via loadRegToStackSlot().  Returns false otherwise.
+  bool
+  restoreCalleeSavedRegisters(MachineBasicBlock &MBB,
+                              MachineBasicBlock::iterator MI,
+                              std::vector<CalleeSavedInfo> &CSI,
+                              const TargetRegisterInfo *TRI) const override;
 
-  // hasFP - Return true if the specified function should have a dedicated frame
-  // pointer register.  This is true if the function has variable sized allocas,
-  // if it needs dynamic stack realignment, if frame pointer elimination is
-  // disabled, or if the frame address is taken.
+  /// Return true if the specified function should have a dedicated frame
+  /// pointer register.  This is true if the function has variable sized
+  /// allocas, if it needs dynamic stack realignment, if frame pointer
+  /// elimination is disabled, or if the frame address is taken.
   bool hasFP(const MachineFunction &MF) const override;
 
-  /// hasReservedCallFrame - Under normal circumstances, when a frame pointer is
-  /// not required, we reserve argument space for call sites in the function
-  /// immediately on entry to the current function. This eliminates the need for
-  /// add/sub sp brackets around call sites. Returns true if the call frame is
-  /// included as part of the stack frame.
+  /// Under normal circumstances, when a frame pointer is not required, we
+  /// reserve argument space for call sites in the function immediately on
+  /// entry to the current function. This eliminates the need for add/sub sp
+  /// brackets around call sites. Returns true if the call frame is included as
+  /// part of the stack frame.
   bool hasReservedCallFrame(const MachineFunction &MF) const override;
 
-  /// canSimplifyCallFramePseudos - If there is a reserved call frame, the
-  /// call frame pseudos can be simplified.  Having a FP, as in the default
-  /// implementation, is not sufficient here since we can't always use it.
-  /// Use a more nuanced condition.
+  /// If there is a reserved call frame, the call frame pseudos can be
+  /// simplified.  Having a FP, as in the default implementation, is not
+  /// sufficient here since we can't always use it.  Use a more nuanced
+  /// condition.
   bool canSimplifyCallFramePseudos(const MachineFunction &MF) const override;
 
-  // needsFrameIndexResolution - Do we need to perform FI resolution for
-  // this function. Normally, this is required only when the function
-  // has any stack objects. However, FI resolution actually has another job,
-  // not apparent from the title - it resolves callframe setup/destroy
-  // that were not simplified earlier.
+  // Do we need to perform FI resolution for this function. Normally, this is
+  // required only when the function has any stack objects. However, FI
+  // resolution actually has another job, not apparent from the title - it
+  // resolves callframe setup/destroy that were not simplified earlier.
+  //
   // So, this is required for M680x0 functions that have push sequences even
   // when there are no stack objects.
   bool needsFrameIndexResolution(const MachineFunction &MF) const override;
 
-  /// getFrameIndexReference - This method should return the base register
-  /// and offset used to reference a frame index location. The offset is
-  /// returned directly, and the base register is returned via FrameReg.
+  /// This method should return the base register and offset used to reference
+  /// a frame index location. The offset is returned directly, and the base
+  /// register is returned via FrameReg.
   int getFrameIndexReference(const MachineFunction &MF, int FI,
                              unsigned &FrameReg) const override;
 
@@ -169,8 +173,9 @@ public:
   /// The heuristic we use is to try and pack them according to static number
   /// of uses and size in order to minimize code size.
   // void orderFrameObjects(const MachineFunction &MF,
-  //                        SmallVectorImpl<int> &ObjectsToAllocate) const override;
+  //                        SmallVectorImpl<int> &ObjectsToAllocate) const
+  //                        override;
 };
-} // End llvm namespace
+} // namespace llvm
 
 #endif

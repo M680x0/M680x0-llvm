@@ -6,9 +6,10 @@
 // License. See LICENSE.TXT for details.
 //
 //===----------------------------------------------------------------------===//
-//
-// This file declares the M680x0 specific subclass of TargetMachine.
-//
+///
+/// \file
+/// This file declares the M680x0 specific subclass of TargetMachine.
+///
 //===----------------------------------------------------------------------===//
 
 #ifndef LLVM_LIB_TARGET_M680X0_M680X0TARGETMACHINE_H

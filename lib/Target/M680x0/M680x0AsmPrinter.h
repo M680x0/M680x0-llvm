@@ -6,9 +6,10 @@
 // License. See LICENSE.TXT for details.
 //
 //===----------------------------------------------------------------------===//
-//
-// M680x0 Assembly printer class.
-//
+///
+/// \file
+/// This file contains M680x0 assembler printer declarations.
+///
 //===----------------------------------------------------------------------===//
 
 #ifndef LLVM_LIB_TARGET_M680X0_M680X0ASMPRINTER_H
@@ -16,6 +17,7 @@
 
 #include "M680x0MCInstLower.h"
 #include "M680x0TargetMachine.h"
+
 #include "llvm/CodeGen/AsmPrinter.h"
 #include "llvm/MC/MCStreamer.h"
 #include "llvm/Support/Compiler.h"

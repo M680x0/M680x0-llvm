@@ -1,5 +1,4 @@
-//===-- M680x0ISelDAGToDAG.cpp - A Dag to Dag Inst Selector for M680x0
-//--------===//
+//===- M680x0ISelDAGToDAG.cpp - M680x0 Dag to Dag Inst Selector -*- C++ -*-===//
 //
 //                     The LLVM Compiler Infrastructure
 //
@@ -7,9 +6,10 @@
 // License. See LICENSE.TXT for details.
 //
 //===----------------------------------------------------------------------===//
-//
-// This file defines an instruction selector for the M680X0 target.
-//
+///
+/// \file
+/// This file defines an instruction selector for the M680X0 target.
+///
 //===----------------------------------------------------------------------===//
 
 #include "M680x0.h"
@@ -17,6 +17,7 @@
 #include "M680x0MachineFunction.h"
 #include "M680x0RegisterInfo.h"
 #include "M680x0TargetMachine.h"
+
 #include "llvm/CodeGen/MachineConstantPool.h"
 #include "llvm/CodeGen/MachineFrameInfo.h"
 #include "llvm/CodeGen/MachineFunction.h"

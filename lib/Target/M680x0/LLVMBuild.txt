@@ -1,4 +1,4 @@
-;===- ./lib/Target/M680x0/LLVMBuild.txt ------------------------*- Conf -*--===;
+;===-- M680x0/LLVMBuild.txt ------------------------------------*- Conf -*--===;
 ;
 ;                     The LLVM Compiler Infrastructure
 ;

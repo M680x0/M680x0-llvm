@@ -1,4 +1,4 @@
-//===-- M680x0AsmPrinter.cpp - M680x0 LLVM Assembly Printer ---------------===//
+//===-- M680x0AsmPrinter.cpp - M680x0 LLVM Assembly Printer -----*- C++ -*-===//
 //
 //                     The LLVM Compiler Infrastructure
 //
@@ -6,20 +6,22 @@
 // License. See LICENSE.TXT for details.
 //
 //===----------------------------------------------------------------------===//
-//
-// This file contains a printer that converts from our internal representation
-// of machine-dependent LLVM code to GAS-format M680x0 assembly language.
-//
+///
+/// \file
+/// This file contains a printer that converts from our internal representation
+/// of machine-dependent LLVM code to GAS-format M680x0 assembly language.
+///
 //===----------------------------------------------------------------------===//
 
 // TODO make it print Motorola asm
-//
+
 #include "M680x0AsmPrinter.h"
 
-#include "InstPrinter/M680x0InstPrinter.h"
 #include "M680x0.h"
 #include "M680x0InstrInfo.h"
 #include "M680x0MachineFunction.h"
+
+#include "InstPrinter/M680x0InstPrinter.h"
 #include "MCTargetDesc/M680x0BaseInfo.h"
 
 #include "llvm/ADT/STLExtras.h"

@@ -1,4 +1,4 @@
-//== M680x0RegisterInfo.td - Target definition file for the M680x0 tablegen ==//
+//== M680x0RegisterInfo.td - M680x0 register definitions ----*- tablegen -*-==//
 //
 //                     The LLVM Compiler Infrastructure
 //
@@ -6,10 +6,12 @@
 // License. See LICENSE.TXT for details.
 //
 //===----------------------------------------------------------------------===//
-//
-// This file describes the M680x0 Register file, defining the registers aliases
-// between the registers, and the register classes built out of the registers.
-//
+///
+/// \file
+/// This file describes the M680x0 Register file, defining the registers
+/// aliases between the registers, and the register classes built out of the
+/// registers.
+///
 //===----------------------------------------------------------------------===//
 
 class MxReg<string N, bits<16> ENC,

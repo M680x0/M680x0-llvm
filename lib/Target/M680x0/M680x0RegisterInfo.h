@@ -103,6 +103,11 @@ public:
   unsigned getGlobalBaseRegister() const { return GlobalBasePtr; }
 
   const TargetRegisterClass *intRegClass(unsigned Size) const;
+
+  // FIXME #52 Actually implement any size spill and remove this override
+  unsigned getSpillSize(const TargetRegisterClass &RC) const override {
+    return 4;
+  }
 };
 
 } // end namespace llvm

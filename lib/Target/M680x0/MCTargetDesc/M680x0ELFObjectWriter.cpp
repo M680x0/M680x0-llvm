@@ -62,7 +62,7 @@ getType(unsigned Kind, MCSymbolRefExpr::VariantKind &Modifier, bool &IsPCRel) {
   }
 }
 
-// FIXME Should i split reloc types between pre x20 and the rest?
+// FIXME #4 Should i split reloc types between pre x20 and the rest?
 unsigned M680x0ELFObjectWriter::getRelocType(MCContext &Ctx,
                                              const MCValue &Target,
                                              const MCFixup &Fixup,

@@ -67,8 +67,8 @@ M680x0MCInstLower::GetSymbolFromOperand(const MachineOperand &MO) const {
 
 MCOperand M680x0MCInstLower::LowerSymbolOperand(const MachineOperand &MO,
                                                 MCSymbol *Sym) const {
-  // FIXME: We would like an efficient form for this, so we don't have to do a
-  // lot of extra uniquing.
+  // FIXME We would like an efficient form for this, so we don't have to do a
+  // lot of extra uniquing. This fixme is originally from X86
   const MCExpr *Expr = nullptr;
   MCSymbolRefExpr::VariantKind RefKind = MCSymbolRefExpr::VK_None;
 

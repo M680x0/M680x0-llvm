@@ -43,7 +43,7 @@ namespace {
 
 /// isInt - Checks if an integer fits into the given bit width.
 /// non-templated version
-/// FIXME move it somewhere
+/// FIXME #11 move it somewhere
 inline bool isInt(unsigned N, int64_t x) {
   return N >= 64 ||
          (-(INT64_C(1) << (N - 1)) <= x && x < (INT64_C(1) << (N - 1)));
@@ -382,10 +382,7 @@ bool M680x0DAGToDAGISel::matchAddressBase(SDValue N,
   return true;
 }
 
-/// TODO
-/// Have no idea how it is node with M680x0 ATM
-/// Here is some description:
-/// https://lists.debian.org/debian-68k/2007/11/msg00071.html
+/// TODO #41 Add TLS support
 bool M680x0DAGToDAGISel::matchLoadInAddress(LoadSDNode *N,
                                             M680x0ISelAddressMode &AM) {
   // SDValue Address = N->getOperand(1);
@@ -426,7 +423,7 @@ bool M680x0DAGToDAGISel::matchAddressRecursively(SDValue N,
   // into it.  Instead of handling this in every case, we handle it here.
   // PC relative addressing: %PC + 16-bit displacement!
   if (AM.isPCRelative()) {
-    // FIXME: JumpTable and ExternalSymbol address currently don't like
+    // FIXME #12 JumpTable and ExternalSymbol address currently don't like
     // displacements.  It isn't very important, but this should be fixed for
     // consistency.
     // if (!(AM.ES || AM.MCSym) && AM.JT != -1)
@@ -498,7 +495,7 @@ bool M680x0DAGToDAGISel::matchAddress(SDValue N, M680x0ISelAddressMode &AM) {
 
   // Post-processing: Convert lea(,%reg,2) to lea(%reg,%reg), which has
   // a smaller encoding and avoids a scaled-index.
-  // TODO make sure it is an indexed mode
+  // TODO #13 make sure it is an indexed mode
   // if (AM.Scale == 2 &&
   //     AM.BaseType == M680x0ISelAddressMode::RegBase &&
   //     AM.BaseReg.getNode() == nullptr) {
@@ -508,8 +505,8 @@ bool M680x0DAGToDAGISel::matchAddress(SDValue N, M680x0ISelAddressMode &AM) {
 
   // Post-processing: Convert foo to foo(%pc), even in non-PIC mode,
   // because it has a smaller encoding.
-  // TODO: Which other code models can use this?
-  // FIXME this must be done only if PC* modes are currently being matched
+  // TODO #13 Which other code models can use this?
+  // FIXME #13 this must be done only if PC* modes are currently being matched
   // if (TM.getCodeModel() == CodeModel::Small &&
   //     Subtarget->is64Bit() &&
   //     AM.Scale == 1 &&

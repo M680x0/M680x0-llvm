@@ -13,7 +13,7 @@
 ///
 //===----------------------------------------------------------------------===//
 
-// TODO make it print Motorola asm
+// TODO #33 make it print Motorola asm
 
 #include "M680x0AsmPrinter.h"
 
@@ -81,11 +81,11 @@ void M680x0AsmPrinter::EmitInstruction(const MachineInstr *MI) {
 }
 
 void M680x0AsmPrinter::EmitFunctionBodyStart() {
-  // TODO
+  // TODO #33
 }
 
 void M680x0AsmPrinter::EmitFunctionBodyEnd() {
-  // TODO
+  // TODO #33
 }
 
 void M680x0AsmPrinter::EmitStartOfAsmFile(Module &M) {

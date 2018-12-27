@@ -128,7 +128,7 @@ static inline unsigned GetCondBranchFromCond(M680x0::CondCode CC) {
   }
 }
 
-// FIXME would be nice tablegen to generate these predicates, mb tag based
+// FIXME #25 would be nice tablegen to generate these predicates, mb tag based
 
 static inline unsigned IsCMP(unsigned Op) {
   switch (Op) {

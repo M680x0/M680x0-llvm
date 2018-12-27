@@ -14,6 +14,8 @@
 ///
 //===----------------------------------------------------------------------===//
 
+// TODO #35 Verify C convention follows SysV M68K ABI
+
 class CCIfSubtarget<string F, CCAction A>
     : CCIf<!strconcat("static_cast<const M680X0Subtarget&>"
                        "(State.getMachineFunction().getSubtarget()).", F), A>;
@@ -36,7 +38,7 @@ def RetCC_M680x0_C : CallingConv<[
 ]>;
 
 /// M680x0 fastcc return convention.
-/// TODO:
+/// TODO #36
 /// This convention allows to return upto 16 bytes in registers which can be
 /// split among 16 1-byte values or used for a single 16-byte value.
 def RetCC_M680x0_Fast : CallingConv<[
@@ -73,7 +75,7 @@ def CC_M680x0_Fast : CallingConv<[
   CCIfType<[i1, i8, i16], CCPromoteToType<i32>>,
 
   /// The 'nest' parameter, if any, is passed in A1.
-  CCIfNest<CCAssignToReg<[A1]>>, // FIXME is this correct?
+  CCIfNest<CCAssignToReg<[A1]>>, // FIXME #2 is this correct?
 
   /// Since M680x0 uses %An for pointers and we want them be passed in regs
   /// too we have to use custom function.
@@ -88,7 +90,7 @@ def CC_M680x0_C : CallingConv<[
   CCIfType<[i1, i8, i16], CCPromoteToType<i32>>,
 
   /// The 'nest' parameter, if any, is passed in A1.
-  CCIfNest<CCAssignToReg<[A1]>>, // FIXME is this correct?
+  CCIfNest<CCAssignToReg<[A1]>>, // FIXME #2 is this correct?
 
   /// Use registers only if 'inreg' used and the call is not vararg
   CCIfNotVarArg<CCIfInReg<CCIfType<[i32], CCAssignToReg<[D0, D1]>>>>,

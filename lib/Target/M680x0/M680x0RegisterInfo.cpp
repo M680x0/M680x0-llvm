@@ -43,13 +43,11 @@ static cl::opt<bool> EnableBasePointer(
 void M680x0RegisterInfo::anchor() {}
 
 M680x0RegisterInfo::M680x0RegisterInfo(const M680x0Subtarget &ST)
-    // FIXME not sure it this the correct value, it expects RA, but M680x0
+    // FIXME x26 not sure it this the correct value, it expects RA, but M680x0
     // passes IP anyway, how this works?
     : M680x0GenRegisterInfo(M680x0::A0,
-                            // FIXME Tablegen these
                             0, 0, M680x0::PC),
       Subtarget(ST) {
-  // FIXME would be nice to have tablegen level name aliasing
   StackPtr = M680x0::SP;
   FramePtr = M680x0::A6;
   GlobalBasePtr = M680x0::A5;
@@ -184,7 +182,7 @@ void M680x0RegisterInfo::eliminateFrameIndex(MachineBasicBlock::iterator II,
   int FIndex = (int)(Base.getIndex());
 
   // unsigned Opc = MI.getOpcode();
-  // FIXME there is no jmp from mem yet
+  // FIXME #7 there is no jmp from mem yet
   // bool AfterFPPop =  Opc == M680x0::TAILJMPm || Opc == M680x0::TCRETURNmi;
   bool AfterFPPop = false;
 

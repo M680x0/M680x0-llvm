@@ -11,7 +11,7 @@
 /// This file exposes functions that may be used with BuildMI from the
 /// MachineInstrBuilder.h file to handle M680x0'isms in a clean way.
 ///
-/// TODO edit the following mem stuff
+/// TODO #42 edit the following mem stuff
 /// The BuildMem function may be used with the BuildMI function to add entire
 /// memory references in a single, typed, function call.  M680x0 memory
 /// references can be very complex expressions (described in the README), so

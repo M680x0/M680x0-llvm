@@ -167,7 +167,7 @@ public:
   void emitSPUpdate(MachineBasicBlock &MBB, MachineBasicBlock::iterator &MBBI,
                     int64_t NumBytes, bool InEpilogue) const;
 
-  /// TODO
+  /// TODO #39
   /// Order the symbols in the local stack.
   /// We want to place the local stack objects in some sort of sensible order.
   /// The heuristic we use is to try and pack them according to static number

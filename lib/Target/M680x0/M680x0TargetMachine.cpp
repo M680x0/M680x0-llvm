@@ -33,7 +33,7 @@ extern "C" void LLVMInitializeM680x0Target() {
 
 namespace {
 
-// FIXME this layout is true for M68000 original cpu, other variants will
+// FIXME #28 this layout is true for M68000 original cpu, other variants will
 // affect DL computation
 std::string computeDataLayout(const Triple &TT, StringRef CPU,
                               const TargetOptions &Options) {
@@ -41,7 +41,7 @@ std::string computeDataLayout(const Triple &TT, StringRef CPU,
   // M680x0 is Big Endian
   Ret += "E";
 
-  // FIXME how to wire it with the used object format?
+  // FIXME #28 how to wire it with the used object format?
   Ret += "-m:e";
 
   // M680x0 pointers are always 32 bit wide even for 16 bit cpus
@@ -50,7 +50,7 @@ std::string computeDataLayout(const Triple &TT, StringRef CPU,
   // M680x0 requires i8 to align on 2 byte boundry
   Ret += "-i8:8:8-i16:16:16-i32:32:32";
 
-  // FIXME no floats at the moment
+  // FIXME #29 no floats at the moment
 
   // The registers can hold 8, 16, 32 bits
   Ret += "-n8:16:32";
@@ -78,7 +78,7 @@ CodeModel::Model getEffectiveCodeModel(Optional<CodeModel::Model> CM,
   } else if (CM == CodeModel::Large) {
     llvm_unreachable("Large code model is not supported");
   } else if (CM == CodeModel::Kernel) {
-    // FIXME Kernel afaik is small cm plus some weird binding
+    // FIXME #31 Kernel afaik is small cm plus some weird binding
     llvm_unreachable("Kernel code model is not supported");
   }
   return CM.getValue();

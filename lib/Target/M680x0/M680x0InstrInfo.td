@@ -453,12 +453,12 @@ def MximmSExt8  : PatLeaf<(i8  imm)>;
 def MximmSExt16 : PatLeaf<(i16 imm)>;
 def MximmSExt32 : PatLeaf<(i32 imm)>;
 
-// Used for Shifts and Rotations, since M680x0 immediates in these
-// instructions are 1 <= i <= 8.
-// Generally, if immediate is bigger than 8 it will be moved to a register
-// and then an operation is performed. TODO you need to evaluate whether
-// splitting one big shift(or rotate) into a few smaller is faster than doing
-// a move, if so do custom lowering
+// Used for Shifts and Rotations, since M680x0 immediates in these instructions
+// are 1 <= i <= 8. Generally, if immediate is bigger than 8 it will be moved
+// to a register and then an operation is performed.
+//
+// TODO #48 you need to evaluate whether splitting one big shift(or rotate)
+// into a few smaller is faster than doing a move, if so do custom lowering
 def Mximm8_1to8   : ImmLeaf<i8,  [{ return Imm >= 1 && Imm <= 8; }]>;
 def Mximm16_1to8  : ImmLeaf<i16, [{ return Imm >= 1 && Imm <= 8; }]>;
 def Mximm32_1to8  : ImmLeaf<i32, [{ return Imm >= 1 && Imm <= 8; }]>;
@@ -513,8 +513,8 @@ def MxExtLoadi32i16  : PatFrag<(ops node:$ptr), (i32 (extloadi16 node:$ptr))>;
 // Type Fixtures are ValueType related information sets that usually go together
 //===----------------------------------------------------------------------===//
 
-// TODO make it folded like MxType8.F.Op nad MxType8.F.Pat
-// TODO move strings into META subclass
+// TODO #49 make it folded like MxType8.F.Op nad MxType8.F.Pat
+// TODO #49 move strings into META subclass
 class MxType<ValueType vt,  /// Type of data this fixture refers to
             string prefix,  /// Prefix used to identify type
            string postfix,  /// Prefix used to qualify type

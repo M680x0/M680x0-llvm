@@ -186,7 +186,7 @@ static unsigned EmitConstant(uint64_t Val, unsigned Size, unsigned Pad,
   assert(uintDoesFit(Size, Val));
 
   // Pad the instruction with zeros if any
-  // FIXME Actually emit zeros, since there might be trash in the buffer.
+  // FIXME #5 Actually emit zeros, since there might be trash in the buffer.
   Size += Pad;
 
   // Writing Value in host's endianness

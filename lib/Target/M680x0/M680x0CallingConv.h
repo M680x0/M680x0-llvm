@@ -35,7 +35,7 @@ public:
 };
 
 /// NOTE this function is used to select registers for formal arguments and call
-/// TODO Need to assigne all the pointers first
+/// TODO #34 Need to assigne all the pointers first
 inline bool CC_M680x0_Any_AssignToReg(unsigned &ValNo, MVT &ValVT, MVT &LocVT,
                                       CCValAssign::LocInfo &LocInfo,
                                       ISD::ArgFlagsTy &ArgFlags,
@@ -53,7 +53,7 @@ inline bool CC_M680x0_Any_AssignToReg(unsigned &ValNo, MVT &ValVT, MVT &LocVT,
       M680x0::D1,
   };
 
-  // SHIT rewrite this
+  // SHIT #34 rewrite this
   // NOTE This is probably wrong
   auto I = CCInfo.F.arg_begin();
   int No = ValNo;

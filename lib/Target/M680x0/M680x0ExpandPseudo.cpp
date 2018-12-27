@@ -80,7 +80,7 @@ bool M680x0ExpandPseudo::ExpandMI(MachineBasicBlock &MBB,
   switch (Opcode) {
   default:
     return false;
-    /// TODO would be nice to infer all these parameters
+    /// TODO #37 would be nice to infer all these parameters
 
   case M680x0::MOVXd16d8:
     return TII->ExpandMOVX_RR(MIB, MVT::i16, MVT::i8);
@@ -257,7 +257,7 @@ bool M680x0ExpandPseudo::ExpandMI(MachineBasicBlock &MBB,
         // MIB = BuildMI(MBB, MBBI, DL, TII->get(M680x0::RTD)).addImm(StackAdj);
       } else {
         // Copy PC from stack to a free address(A0 or A1) register
-        // TODO check if it is really free
+        // TODO #38 check if it is really free
         BuildMI(MBB, MBBI, DL, TII->get(M680x0::MOV32aj), M680x0::A1)
             .addReg(M680x0::SP);
 

@@ -37,7 +37,6 @@ using namespace llvm;
 extern bool FixGlobalBaseReg;
 
 /// Select the M680x0 CPU for the given triple and cpu name.
-/// FIXME: Merge with the copy in M680x0MCTargetDesc.cpp
 static StringRef selectM680x0CPU(Triple TT, StringRef CPU) {
   if (CPU.empty() || CPU == "generic") {
       CPU = "M68000";

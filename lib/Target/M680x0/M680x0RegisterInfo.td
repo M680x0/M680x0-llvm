@@ -71,7 +71,7 @@ def SP : MxAliasReg<"sp", A7>;
 // def SSP : MxAliasReg<"ssp", A7>;
 // def ISP : MxAliasReg<"isp", A7>;
 
-// TODO get rid of "pseudo" registers and use just MxReg variants and use
+// TODO #50 get rid of "pseudo" registers and use just MxReg variants and use
 // HWEncoding's other 13 bits to encode type(and potentially other info) of
 // register.
 
@@ -103,7 +103,7 @@ def AR32 : MxRegClass<[i32], 32, (add (sequence "A%u", 0, 6), SP)>;
 def AR32_NOSP : MxRegClass<[i32], 32, (add (sequence "A%u", 0, 6))>;
 
 // Index Register Classes
-// FIXME try order D0, D1, A0, A1, ...
+// FIXME #27 try order D0, D1, A0, A1, ...
 def XR16 : MxRegClass<[i16], 16, (add DR16, AR16)>;
 def XR32 : MxRegClass<[i32], 32, (add DR32, AR32)>;
 

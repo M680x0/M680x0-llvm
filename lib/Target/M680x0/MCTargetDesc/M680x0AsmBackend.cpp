@@ -139,7 +139,7 @@ static unsigned getRelaxedOpcodeArith(const MCInst &Inst) {
   switch (Op) {
   default:
     return Op;
-    // TODO there will be some relaxations for PCD and ARD mem for x20
+    // NOTE there will be some relaxations for PCD and ARD mem for x20
   }
 }
 
@@ -162,7 +162,7 @@ bool M680x0AsmBackend::mayNeedRelaxation(const MCInst &Inst,
 
   // Check if the relaxable operand has an expression. For the current set of
   // relaxable instructions, the relaxable operand is always the last operand.
-  // FIXME will change for x20 mem
+  // NOTE will change for x20 mem
   unsigned RelaxableOp = Inst.getNumOperands() - 1;
   if (Inst.getOperand(RelaxableOp).isExpr())
     return true;
@@ -181,14 +181,14 @@ bool M680x0AsmBackend::fixupNeedsRelaxation(const MCFixup &Fixup,
   // Relax if the value is too big for a (signed) i8. This means that byte-wide
   // instructions have to matched by default
   //
-  //                           NOTE
+  // NOTE
   // A branch to the immediately following instruction automatically
   // uses the 16-bit displacement format because the 8-bit
   // displacement field contains $00 (zero offset).
   return Value == 0 || int64_t(Value) != int64_t(int8_t(Value));
 }
 
-// FIXME: Can tblgen help at all here to verify there aren't other instructions
+// NOTE Can tblgen help at all here to verify there aren't other instructions
 // we can relax?
 void M680x0AsmBackend::relaxInstruction(const MCInst &Inst,
                                         const MCSubtargetInfo &STI,

@@ -90,13 +90,13 @@ def ADJCALLSTACKUP
 // Tail Call
 //===----------------------------------------------------------------------===//
 
-// FIXME need to read more about TC in llvm
+// FIXME #7 need to read more about TC in llvm
 
 // Tailcall stuff. The TCRETURN instructions execute after the epilog, so they
 // can never use callee-saved registers. That is the purpose of the XR32_TC
 // register classes.
 
-// FIXME: This is disabled for PIC mode because the global base
+// FIXME #7 This is disabled for PIC mode because the global base
 // register which is part of the address mode may be assigned a
 // callee-saved register.
 def : Pat<(MxTCRet (load MxCP_ARII:$dst), imm:$adj),

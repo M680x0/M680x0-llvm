@@ -104,7 +104,7 @@ M680x0TargetLowering::M680x0TargetLowering(const M680x0TargetMachine &TM,
     setOperationAction(OP, MVT::i8, Expand);
     setOperationAction(
         OP, MVT::i16,
-        Expand); // FIXME something wrong with custom lowering here
+        Expand); // FIXME #14 something wrong with custom lowering here
     setOperationAction(OP, MVT::i32, Expand);
   }
 
@@ -227,7 +227,7 @@ static SDValue CreateCopyOfByValArgument(SDValue Src, SDValue Dst,
 /// Return true if the calling convention is one that we can guarantee TCO for.
 static bool canGuaranteeTCO(CallingConv::ID CC) {
   return false;
-  // return CC == CallingConv::Fast; // TODO Since M68010 only
+  // return CC == CallingConv::Fast; // TODO #7 Since M68010 only
 }
 
 /// Return true if we might ever do TCO for calls with this calling convention.
@@ -407,7 +407,7 @@ SDValue M680x0TargetLowering::LowerMemArgument(
 
   // Calculate SP offset of interrupt parameter, re-arrange the slot normally
   // taken by a return address.
-  // TODO interrupts
+  // TODO #10 interrupts
   // if (CallConv == CallingConv::M680x0_INTR) {
   //   const M680x0Subtarget& Subtarget =
   //       static_cast<const M680x0Subtarget&>(DAG.getSubtarget());
@@ -419,7 +419,7 @@ SDValue M680x0TargetLowering::LowerMemArgument(
   //   1);
   // }
 
-  // FIXME: For now, all byval parameter objects are marked mutable. This can be
+  // FIXME #15 For now, all byval parameter objects are marked mutable. This can be
   // changed with more analysis.
   // In case of tail call optimization mark all arguments mutable. Since they
   // could be overwritten by lowering of arguments in case of a tail call.
@@ -433,7 +433,7 @@ SDValue M680x0TargetLowering::LowerMemArgument(
       Bytes = 1; // Don't create zero-sized stack objects.
     int FI = MFI.CreateFixedObject(Bytes, Offset, isImmutable);
     // Adjust SP offset of interrupt parameter.
-    // TODO interrupts
+    // TODO #10 interrupts
     // if (CallConv == CallingConv::M680x0_INTR) {
     //   MFI.setObjectOffset(FI, Offset);
     // }
@@ -450,7 +450,7 @@ SDValue M680x0TargetLowering::LowerMemArgument(
     }
 
     // Adjust SP offset of interrupt parameter.
-    // TODO interrupts
+    // TODO #10 interrupts
     // if (CallConv == CallingConv::M680x0_INTR) {
     //   MFI.setObjectOffset(FI, Offset);
     // }
@@ -505,7 +505,7 @@ M680x0TargetLowering::LowerCall(TargetLowering::CallLoweringInfo &CLI,
   M680x0MachineFunctionInfo *MFI = MF.getInfo<M680x0MachineFunctionInfo>();
   // const M680x0RegisterInfo *TRI = Subtarget.getRegisterInfo();
 
-  // TODO interrupts
+  // TODO #10 interrupts
   // if (CallConv == CallingConv::M680x0_INTR)
   //   report_fatal_error("M680x0 interrupts may not be called directly");
 
@@ -513,10 +513,9 @@ M680x0TargetLowering::LowerCall(TargetLowering::CallLoweringInfo &CLI,
   if (Attr.getValueAsString() == "true")
     isTailCall = false;
 
-  // FIXME check this
+  // FIXME #7 Add tailcalls support
   // if (Subtarget.isPICStyleGOT() &&
   //     !MF.getTarget().Options.GuaranteedTailCallOpt) {
-  //   // TODO reqd more about this stuff
   //   // If we are using a GOT, disable tail calls to external symbols with
   //   // default visibility. Tail calling such a symbol requires using a GOT
   //   // relocation, which forces early binding of the symbol. This breaks code
@@ -572,7 +571,7 @@ M680x0TargetLowering::LowerCall(TargetLowering::CallLoweringInfo &CLI,
     NumBytes = GetAlignedArgumentStackSize(NumBytes, DAG);
   }
 
-  // TODO debug this:
+  // TODO #44 debug this:
   int FPDiff = 0;
   if (isTailCall && !IsSibcall && !IsMustTail) {
     // Lower arguments at fp - stackoffset + fpdiff.
@@ -676,7 +675,7 @@ M680x0TargetLowering::LowerCall(TargetLowering::CallLoweringInfo &CLI,
   if (!MemOpChains.empty())
     Chain = DAG.getNode(ISD::TokenFactor, DL, MVT::Other, MemOpChains);
 
-  // FIXME check this
+  // FIXME #16 Fix PIC style GOT
   // ??? The only time GOT is really needed is for Medium-PIC static data
   // ??? otherwise we are happy with pc-rel or static references
   // if (Subtarget.isPICStyleGOT()) {
@@ -943,7 +942,7 @@ SDValue M680x0TargetLowering::LowerFormalArguments(
 
   MachineFrameInfo &MFI = MF.getFrameInfo();
 
-  // TODO interrupts...
+  // TODO #10 interrupts...
   // if (CCID == CallingConv::M680x0_INTR) {
   //   bool isLegal = Ins.size() == 1 ||
   //                  (Ins.size() == 2 && ((Is64Bit && Ins[1].VT == MVT::i64) ||
@@ -1001,7 +1000,7 @@ SDValue M680x0TargetLowering::LowerFormalArguments(
     }
 
     // If value is passed via pointer - do a load.
-    // TODO debug how this really works
+    // TODO #45 debug how this really works
     // ??? May I remove this indirect shizzle?
     if (VA.getLocInfo() == CCValAssign::Indirect)
       ArgValue =
@@ -1058,7 +1057,7 @@ SDValue M680x0TargetLowering::LowerFormalArguments(
 
     // Copy all forwards from physical to virtual registers.
     for (ForwardedRegister &F : Forwards) {
-      // FIXME: Can we use a less constrained schedule?
+      // FIXME #7 Can we use a less constrained schedule?
       SDValue RegVal = DAG.getCopyFromReg(Chain, DL, F.VReg, F.VT);
       F.VReg = MF.getRegInfo().createVirtualRegister(getRegClassFor(F.VT));
       Chain = DAG.getCopyToReg(Chain, DL, F.VReg, RegVal);
@@ -2282,7 +2281,7 @@ SDValue M680x0TargetLowering::LowerSELECT(SDValue Op, SelectionDAG &DAG) const {
     bool IllegalFPCMov = false;
 
     if ((isM680x0LogicalCmp(Cmp) && !IllegalFPCMov) ||
-        Opc == M680x0ISD::BT) { // FIXME
+        Opc == M680x0ISD::BT) {
       Cond = Cmp;
       addTest = false;
     }
@@ -2475,7 +2474,7 @@ SDValue M680x0TargetLowering::LowerBRCOND(SDValue Op, SelectionDAG &DAG) const {
 
     SDValue Cmp = Cond.getOperand(1);
     unsigned Opc = Cmp.getOpcode();
-    // FIXME: WHY THE SPECIAL CASING OF LogicalCmp??
+
     if (isM680x0LogicalCmp(Cmp) || Opc == M680x0ISD::BT) {
       Cond = Cmp;
       addTest = false;
@@ -2958,7 +2957,7 @@ const MCExpr *M680x0TargetLowering::getPICJumpTableRelocBaseExpr(
 /// Callee pop is necessary to support tail calls.
 bool M680x0::isCalleePop(CallingConv::ID CallingConv, bool IsVarArg,
                          bool GuaranteeTCO) {
-  // FIXME RTD is not available untill M68010
+  // FIXME #7 RTD is not available untill M68010
   return false;
   // // If GuaranteeTCO is true, we force some calls to be callee pop so that we
   // // can guarantee TCO.
@@ -3309,7 +3308,7 @@ M680x0TargetLowering::EmitLoweredSelect(MachineInstr &MI,
 MachineBasicBlock *
 M680x0TargetLowering::EmitLoweredSegAlloca(MachineInstr &MI,
                                            MachineBasicBlock *BB) const {
-  // FIXME See Target TODO.md
+  // FIXME #17 See Target TODO.md
   llvm_unreachable("Cannot lower Segmented Stack Alloca with stack-split on");
 }
 
@@ -3450,7 +3449,7 @@ static SDValue combineCarryThroughADD(SDValue CCR) {
 // where Op could be BRCOND or CMOV.
 //
 static SDValue checkBoolTestSetCCCombine(SDValue Cmp, M680x0::CondCode &CC) {
-  // FIXME Read through, make sure it fits m68k
+  // FIXME #18 Read through, make sure it fits m68k
   // // This combine only operates on CMP-like nodes.
   // if (!(Cmp.getOpcode() == M680x0ISD::CMP ||
   //       (Cmp.getOpcode() == M680x0ISD::SUB && !Cmp->hasAnyUseOfValue(0))))
@@ -3634,7 +3633,7 @@ static SDValue combineSUBX(SDNode *N, SelectionDAG &DAG) {
 // Optimize RES, CCR = M680x0ISD::ADDX LHS, RHS, CCR
 static SDValue combineADDX(SDNode *N, SelectionDAG &DAG,
                            TargetLowering::DAGCombinerInfo &DCI) {
-  // FIXME Read through, make sure it fits m68k
+  // FIXME #19 Read through, make sure it fits m68k
   // // If the LHS and RHS of the ADDX node are zero, then it can't overflow and
   // // the result is either zero or one (depending on the input carry bit).
   // // Strength reduce this down to a "set on carry" aka SETCC_CARRY&1.

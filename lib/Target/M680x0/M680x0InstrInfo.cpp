@@ -167,7 +167,7 @@ void M680x0InstrInfo::AddZExt(MachineBasicBlock &MBB,
     And = M680x0::AND32di;
   }
 
-  // TODO use xor r,r to decrease size
+  // TODO #46 use xor r,r to decrease size
   BuildMI(MBB, I, DL, get(And), Reg).addReg(Reg).addImm(Mask);
 }
 
@@ -328,7 +328,7 @@ bool M680x0InstrInfo::ExpandCCR(MachineInstrBuilder &MIB, bool isToCCR) const {
   if (isToCCR) {
     MIB->setDesc(get(M680x0::MOV16cd));
   } else {
-    // FIXME M68010 or better is required
+    // FIXME #24 M68010 or better is required
     MIB->setDesc(get(M680x0::MOV16dc));
   }
 
@@ -558,36 +558,37 @@ bool M680x0InstrInfo::getStackSlotRange(const TargetRegisterClass *RC,
 
 void M680x0InstrInfo::storeRegToStackSlot(MachineBasicBlock &MBB,
                                           MachineBasicBlock::iterator MI,
-                                          unsigned SrcReg, bool isKill, int FI,
+                                          unsigned SrcReg, bool isKill,
+                                          int FrameIndex,
                                           const TargetRegisterClass *RC,
                                           const TargetRegisterInfo *TRI) const {
   const MachineFunction &MF = *MBB.getParent();
-  assert(MF.getFrameInfo().getObjectSize(FI) == 4 &&
+  assert(MF.getFrameInfo().getObjectSize(FrameIndex) == 4 &&
          "Stack slot too small for store");
   unsigned Opc = getStoreRegOpcode(SrcReg, RC, TRI, Subtarget);
   DebugLoc DL = MBB.findDebugLoc(MI);
-  // (0,FI) <- $reg
-  addFrameReference(BuildMI(MBB, MI, DL, get(Opc)), FI)
+  // (0,FrameIndex) <- $reg
+  addFrameReference(BuildMI(MBB, MI, DL, get(Opc)), FrameIndex)
       .addReg(SrcReg, getKillRegState(isKill));
 }
 
 void M680x0InstrInfo::loadRegFromStackSlot(
     MachineBasicBlock &MBB, MachineBasicBlock::iterator MI, unsigned DstReg,
-    int FI, const TargetRegisterClass *RC,
+    int FrameIndex, const TargetRegisterClass *RC,
     const TargetRegisterInfo *TRI) const {
   const MachineFunction &MF = *MBB.getParent();
-  assert(MF.getFrameInfo().getObjectSize(FI) == 4 &&
+  assert(MF.getFrameInfo().getObjectSize(FrameIndex) == 4 &&
          "Stack slot too small for store");
   unsigned Opc = getLoadRegOpcode(DstReg, RC, TRI, Subtarget);
   DebugLoc DL = MBB.findDebugLoc(MI);
-  addFrameReference(BuildMI(MBB, MI, DL, get(Opc), DstReg), FI);
+  addFrameReference(BuildMI(MBB, MI, DL, get(Opc), DstReg), FrameIndex);
 }
 
 /// Return a virtual register initialized with the the global base register
 /// value. Output instructions required to initialize the register in the
 /// function entry block, if necessary.
 ///
-/// TODO: Eliminate this and move the code to M680x0MachineFunctionInfo.
+/// TODOss #47 Eliminate this and move the code to M680x0MachineFunctionInfo.
 unsigned M680x0InstrInfo::getGlobalBaseReg(MachineFunction *MF) const {
   M680x0MachineFunctionInfo *MxFI = MF->getInfo<M680x0MachineFunctionInfo>();
   unsigned GlobalBaseReg = MxFI->getGlobalBaseReg();

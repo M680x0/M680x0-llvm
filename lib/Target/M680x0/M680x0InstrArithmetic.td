@@ -147,7 +147,7 @@ class MxBiArOp_FMR<string MN, SDNode NODE, MxType TYPE,
                    bits<4> CMD, MxEncEA EA, MxEncExt EXT>
     : MxInst<(outs), (ins MEMOpd:$dst, TYPE.ROp:$opd),
         MN#"."#TYPE.Prefix#"\t$opd, $dst",
-        // FIXME These cannot consume CCR from MxAdd/MxSub which leads for
+        // FIXME #20 These cannot consume CCR from MxAdd/MxSub which leads for
         // MxAdd to survive the match and subsequent malmatch.
         /* [(store (NODE (TYPE.Load MEMPat:$dst), TYPE.VT:$opd), MEMPat:$dst)], */
         [],
@@ -160,7 +160,7 @@ class MxBiArOp_FMI<string MN, SDNode NODE, MxType TYPE,
                    bits<4> CMD, MxEncEA MEMEA, MxEncExt MEMExt>
     : MxInst<(outs), (ins MEMOpd:$dst, TYPE.IOp:$opd),
         MN#"."#TYPE.Prefix#"\t$opd, $dst",
-        // FIXME Same as above
+        // FIXME #20 Same as above
         /* [(store (NODE (TYPE.Load MEMPat:$dst), TYPE.IPat:$opd), MEMPat:$dst)], */
         [],
          MxArithImmEncoding<MxBead4Bits<CMD>,

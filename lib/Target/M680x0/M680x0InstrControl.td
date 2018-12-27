@@ -127,7 +127,7 @@ class MxJMP<MxOperand LOCOp, ComplexPattern LOCPat, MxEncEA EA, MxEncExt EXT>
 def JMP32j : MxJMP<MxARI32, MxCP_ARI, MxEncEAj_0, MxExtEmpty>;
 
 
-// FIXME M680x0 does not allow 16 bit indirect jumps use sext operands
+// FIXME #21 M680x0 does not allow 16 bit indirect jumps use sext operands
 /* def JMP16r     : MxInst<(outs), (ins M680x0_ARI16:$dst), */
 /*                             "jmp\t$dst", */
 /*                             [(brind AR16:$dst)]>; */
@@ -249,7 +249,7 @@ def TAILJMPj  : MxPseudo<(outs), (ins MxARI32_TC:$dst)>;
 // Return
 //===----------------------------------------------------------------------===//
 
-// TODO don't forget about LINK/UNLK
+// TODO #43 don't forget about LINK/UNLK
 
 let isTerminator = 1, isReturn = 1, isBarrier = 1, hasCtrlDep = 1 in {
 
@@ -269,7 +269,7 @@ def RET : MxPseudo<(outs), (ins i32imm:$adj, variable_ops), "",
 
 // Use subx to materialize carry bit.
 let Uses = [CCR], Defs = [CCR], isPseudo = 1 in {
-// FIXME: These are pseudo ops that should be replaced with Pat<> patterns.
+// FIXME #22 These are pseudo ops that should be replaced with Pat<> patterns.
 // However, Pat<> can't replicate the destination reg into the inputs of the
 // result.
 def SETCS_C8d : MxPseudo<(outs MxDRD8:$dst), (ins), "",

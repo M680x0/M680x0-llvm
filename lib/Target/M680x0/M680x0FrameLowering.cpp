@@ -49,7 +49,7 @@ bool M680x0FrameLowering::hasFP(const MachineFunction &MF) const {
          TRI->needsStackRealignment(MF);
 }
 
-// FIXME not only pushes....
+// FIXME #6 not only pushes....
 bool M680x0FrameLowering::hasReservedCallFrame(
     const MachineFunction &MF) const {
   return !MF.getFrameInfo().hasVarSizedObjects() &&
@@ -115,7 +115,7 @@ int M680x0FrameLowering::getFrameIndexReference(const MachineFunction &MF,
       assert((-(Offset + StackSize)) % MFI.getObjectAlignment(FI) == 0);
       return Offset + StackSize;
     }
-    // FIXME: Support tail calls
+    // FIXME: #7 Support tail calls
   } else {
     if (!HasFP)
       return Offset + StackSize;
@@ -424,7 +424,7 @@ int M680x0FrameLowering::mergeSPUpdates(MachineBasicBlock &MBB,
     MBB.erase(PI);
     if (!doMergeWithPrevious)
       MBBI = NI;
-    // TODO check this
+    // TODO #40 check this
     // } else if (Opc == M680x0::LEA32p &&
     //            PI->getOperand(0).getReg() == StackPtr &&
     //            PI->getOperand(2).getReg() == StackPtr) {
@@ -447,7 +447,7 @@ MachineInstrBuilder M680x0FrameLowering::BuildStackAdjustment(
     const DebugLoc &DL, int64_t Offset, bool InEpilogue) const {
   assert(Offset != 0 && "zero offset stack adjustment requested");
 
-  // ??? in the original code for M680x0 Atom uses lea to adjust stack as an
+  // TODO #8 in the original code for M680x0 Atom uses lea to adjust stack as an
   // optimization, can be be this applied for M680x0?
 
   bool IsSub = Offset < 0;
@@ -457,7 +457,7 @@ MachineInstrBuilder M680x0FrameLowering::BuildStackAdjustment(
   MachineInstrBuilder MI = BuildMI(MBB, MBBI, DL, TII.get(Opc), StackPtr)
                                .addReg(StackPtr)
                                .addImm(AbsOffset);
-  // FIXME ATM there is no CCR in these inst
+  // FIXME #9 ATM there is no CCR in these inst
   MI->getOperand(3).setIsDead(); // The CCR implicit def is dead.
   return MI;
 }
@@ -688,7 +688,7 @@ void M680x0FrameLowering::emitPrologue(MachineFunction &MF,
       emitCalleeSavedFrameMoves(MBB, MBBI, DL);
   }
 
-  // TODO interrupts...
+  // TODO #10 interrupts...
   // M680x0 Interrupt handling function cannot assume anything about the
   // direction flag (DF in CCR register). Clear this flag by creating "cld"
   // instruction in each prologue of interrupt handler function.

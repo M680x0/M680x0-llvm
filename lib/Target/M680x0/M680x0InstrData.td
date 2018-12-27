@@ -93,7 +93,7 @@ class MxMove_RM<MxType REG, MxOperand MEMOpd, ComplexPattern MEMPat,
 
 multiclass MMxMove_RM<MxType REG, MxMoveSize SIZE, MxEncEA EA_0> {
 
-// FIXME tablegen defines implicitly created defs inside multiclass which
+// NOTE tablegen defines implicitly created defs inside multiclass which
 // breaks some code like letting Pattern afterwards in _TC
 
 // REG <- (An)+
@@ -344,7 +344,7 @@ def : Pat<(store   MxType32.BPat :$src, MxType32.BPat :$dst),
 def : Pat<(store   MxType32.BPat :$src, MxType32.JPat :$dst),
           (MOV32ji MxType32.JOp  :$dst, MxType32.IOp  :$src)>;
 
-// FIXME Tablegen needs to parse complex defm names inside the loop FFS
+// FIXME #23 Tablegen needs to parse complex defm names inside the loop FFS
 
 // R <- M
 defm MOV8d  : MMxMove_RM<MxType8d, MxMoveSize8, MxEncEAd_0>;

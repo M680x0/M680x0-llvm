@@ -40,7 +40,7 @@ void M680x0ELFTargetObjectFile::Initialize(MCContext &Ctx,
 
   this->TM = &static_cast<const M680x0TargetMachine &>(TM);
 
-  // FIXME do i need them explicitly?
+  // FIXME #32 do i need them explicitly?
   SmallDataSection = getContext().getELFSection(
       ".sdata", ELF::SHT_PROGBITS, ELF::SHF_WRITE | ELF::SHF_ALLOC);
 

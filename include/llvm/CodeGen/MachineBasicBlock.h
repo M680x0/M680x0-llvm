@@ -729,11 +729,19 @@ public:
   DebugLoc findDebugLoc(iterator MBBI) {
     return findDebugLoc(MBBI.getInstrIterator());
   }
+  DebugLoc findDebugLoc(reverse_instr_iterator MBBI);
+  DebugLoc findDebugLoc(reverse_iterator MBBI) {
+    return findDebugLoc(MBBI.getInstrIterator());
+  }
 
   /// Find the previous valid DebugLoc preceding MBBI, skipping and DBG_VALUE
   /// instructions.  Return UnknownLoc if there is none.
   DebugLoc findPrevDebugLoc(instr_iterator MBBI);
   DebugLoc findPrevDebugLoc(iterator MBBI) {
+    return findPrevDebugLoc(MBBI.getInstrIterator());
+  }
+  DebugLoc findPrevDebugLoc(reverse_instr_iterator MBBI);
+  DebugLoc findPrevDebugLoc(reverse_iterator MBBI) {
     return findPrevDebugLoc(MBBI.getInstrIterator());
   }
 

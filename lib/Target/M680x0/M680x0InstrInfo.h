@@ -54,6 +54,9 @@ enum CondCode {
   COND_INVALID
 };
 
+// FIXME #25 would be nice tablegen to generate these predicates and converters
+// mb tag based
+
 static inline M680x0::CondCode GetOppositeBranchCondition(M680x0::CondCode CC) {
   switch (CC) {
   default:
@@ -128,7 +131,40 @@ static inline unsigned GetCondBranchFromCond(M680x0::CondCode CC) {
   }
 }
 
-// FIXME #25 would be nice tablegen to generate these predicates, mb tag based
+static inline M680x0::CondCode GetCondFromBranchOpc(unsigned Opcode) {
+  switch (Opcode) {
+  default:
+    return M680x0::COND_INVALID;
+  case M680x0::Beq8:
+    return M680x0::COND_EQ;
+  case M680x0::Bne8:
+    return M680x0::COND_NE;
+  case M680x0::Blt8:
+    return M680x0::COND_LT;
+  case M680x0::Ble8:
+    return M680x0::COND_LE;
+  case M680x0::Bgt8:
+    return M680x0::COND_GT;
+  case M680x0::Bge8:
+    return M680x0::COND_GE;
+  case M680x0::Bcs8:
+    return M680x0::COND_CS;
+  case M680x0::Bls8:
+    return M680x0::COND_LS;
+  case M680x0::Bhi8:
+    return M680x0::COND_HI;
+  case M680x0::Bcc8:
+    return M680x0::COND_CC;
+  case M680x0::Bmi8:
+    return M680x0::COND_MI;
+  case M680x0::Bpl8:
+    return M680x0::COND_PL;
+  case M680x0::Bvs8:
+    return M680x0::COND_VS;
+  case M680x0::Bvc8:
+    return M680x0::COND_VC;
+  }
+}
 
 static inline unsigned IsCMP(unsigned Op) {
   switch (Op) {
@@ -216,6 +252,16 @@ public:
   /// client has an instance of instruction info, it should always be able to
   /// get register info as well (through this method).
   const M680x0RegisterInfo &getRegisterInfo() const { return RI; };
+
+  bool analyzeBranch(MachineBasicBlock &MBB, MachineBasicBlock *&TBB,
+                     MachineBasicBlock *&FBB,
+                     SmallVectorImpl<MachineOperand> &Cond,
+                     bool AllowModify) const override;
+
+  bool AnalyzeBranchImpl(MachineBasicBlock &MBB, MachineBasicBlock *&TBB,
+                         MachineBasicBlock *&FBB,
+                         SmallVectorImpl<MachineOperand> &Cond,
+                         bool AllowModify) const;
 
   unsigned removeBranch(MachineBasicBlock &MBB,
                         int *BytesRemoved = nullptr) const override;
